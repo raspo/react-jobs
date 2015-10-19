@@ -1,0 +1,15 @@
+{
+    "extends": "airbnb",
+    "env": {
+        "browser": true,
+        "mocha": true,
+        "node": true
+    },
+    "rules": {
+        "indent": 4,
+        "comma-dangle": "never"
+    },
+    "plugins": [
+        "react"
+    ]
+}
