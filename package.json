@@ -4,6 +4,9 @@
   "description": "React.js job board",
   "main": "server.js",
   "scripts": {
+    "build": "npm run clean && webpack --config webpack.config.production.js",
+    "start": "node server.js",
+    "clean": "rimraf public/dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "TF",
