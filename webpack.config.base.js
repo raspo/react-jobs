@@ -1,14 +1,16 @@
-var webpack = require("webpack");
+const webpack = require('webpack');
+const EXTERNALS = require('./externals.js');
 
 module.exports = {
     context: __dirname,
-    entry: [
-        './public/js/app.jsx'
-    ],
+    entry: {
+        app: ['./public/js/app.jsx'],
+        vendors: EXTERNALS
+    },
     output: {
         path: __dirname + '/public/dist',
         publicPath: '/dist/',
-        filename: 'bundle.js'
+        filename: 'app.js'
     },
     module: {
         loaders: [
@@ -23,6 +25,10 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
+    ],
     resolve: {
         extensions: ['', '.js', '.jsx'],
         modulesDirectories: [

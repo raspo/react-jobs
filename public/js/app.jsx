@@ -8,5 +8,3 @@ ReactDOM.render(
     <Header />,
     document.getElementById('app')
 );
-
-console.log('webpack works');
