@@ -6,16 +6,16 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 
-var webpack = require('webpack');
-var webpackDevMiddleware = require('webpack-dev-middleware');
-var webpackHotMiddleware = require('webpack-hot-middleware');
-var config = require('./webpack.config.development');
-var compiler = webpack(config);
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const config = require('./webpack.config.development');
+const compiler = webpack(config);
 
 // app.use(express.static(__dirname + '/public'));
 
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({'extended':'true'}));
+app.use(bodyParser.urlencoded({'extended': 'true'}));
 app.use(bodyParser.json());
 app.use(methodOverride());
 
@@ -32,9 +32,9 @@ app.use(webpackHotMiddleware(compiler, {
 
 // mongoose.connect('mongodb://localhost/reactjobs');
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
-app.listen(3000)
+app.listen(3000);
 console.log('App listening on port 3000');

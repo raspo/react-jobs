@@ -1,11 +1,11 @@
 import React from 'react';
 const { Component } = React;
 
-export default class Header extends Component {
+export default class Create extends Component {
     render() {
         return (
-            <div className="header">
-                Hot-reloaded Header test
+            <div className="container">
+                create new
             </div>
         );
     }
