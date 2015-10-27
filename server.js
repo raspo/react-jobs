@@ -12,8 +12,6 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('./webpack.config.development');
 const compiler = webpack(config);
 
-// app.use(express.static(__dirname + '/public'));
-
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({'extended': 'true'}));
 app.use(bodyParser.json());
@@ -29,6 +27,8 @@ app.use(webpackHotMiddleware(compiler, {
     path: '/__webpack_hmr',
     heartbeat: 10 * 1000
 }));
+
+app.use(express.static(__dirname + '/public'));
 
 // mongoose.connect('mongodb://localhost/reactjobs');
 

@@ -7,7 +7,9 @@ export default class AppLayout extends Component {
         return (
             <div className="app-layout">
                 <Header />
-                {this.props.children}
+                <div className="container">
+                    {this.props.children}
+                </div>
             </div>
         );
     }

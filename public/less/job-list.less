@@ -1,0 +1,69 @@
+.job-list {
+    list-style: none;
+}
+
+.job-list-item {
+    background: #fff;
+    border-bottom: 1px solid @border-color;
+    border-left: 3px solid transparent;
+    transition: background 0.2s ease-in-out, border 0.2s ease-in-out;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:nth-child(even) {
+        background: @content-background;
+    }
+
+    &:hover {
+        background: @highlight-background;
+        border-left-color: @cta-color;
+    }
+
+    a {
+        color: @text-color;
+        display: block;
+        padding: @vertical-spacing @horizontal-spacing @vertical-spacing (@horizontal-spacing - 3);
+        position: relative;
+    }
+}
+
+.job-list-item-logo {
+    height: @company-logo-small;
+    left: @horizontal-spacing - 3;
+    position: absolute;
+    top: @vertical-spacing;
+    width: @company-logo-small;
+}
+
+.job-list-item-title {
+    color: @title-color;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 24px;
+    margin: 0 0 0 (@horizontal-spacing + @company-logo-small);
+}
+
+.job-list-item-company {
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    margin: 0 0 0 (@horizontal-spacing + @company-logo-small);
+}
+
+.job-list-item-meta {
+    color: @muted-color;
+    font-size: 12px;
+    padding: @vertical-spacing @horizontal-spacing 0 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+
+    time,
+    address {
+        font-style: normal;
+        line-height: 20px;
+    }
+}

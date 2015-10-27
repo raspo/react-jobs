@@ -4,9 +4,9 @@ const { Component } = React;
 export default class Create extends Component {
     render() {
         return (
-            <div className="container">
-                create new
-            </div>
+            <section className="content">
+                Create new
+            </section>
         );
     }
 }
