@@ -4,6 +4,10 @@ import { Link } from 'react-router';
 import { simpleDate } from '../utils';
 
 export default class JobList extends Component {
+    static propTypes = {
+        jobs: PropTypes.array.isRequired
+    }
+
     renderJob(job) {
         const jobUrl = `/jobs/${job.id}`;
         const logoURI = job.logo || '/img/company-logo.png';
@@ -16,7 +20,7 @@ export default class JobList extends Component {
                     <h3 className="job-list-item-company">{job.company}</h3>
                     <div className="job-list-item-meta">
                         <time>{simpleDate(job.created)}</time>
-                        <address>{job.location}</address>
+                        <address>{job.address}</address>
                     </div>
                 </Link>
             </li>
@@ -35,7 +39,3 @@ export default class JobList extends Component {
         );
     }
 }
-
-JobList.propTypes = {
-    jobs: PropTypes.array.isRequired
-};

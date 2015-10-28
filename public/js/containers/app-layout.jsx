@@ -3,6 +3,10 @@ const { Component, PropTypes } = React;
 import Header from '../components/header';
 
 export default class AppLayout extends Component {
+    static propTypes = {
+        children: PropTypes.node.isRequired
+    }
+
     render() {
         return (
             <div className="app-layout">
@@ -14,7 +18,3 @@ export default class AppLayout extends Component {
         );
     }
 }
-
-AppLayout.propTypes = {
-    children: PropTypes.node.isRequired
-};

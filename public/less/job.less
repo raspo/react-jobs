@@ -1,0 +1,60 @@
+.job {
+    background: #FFF;
+    padding: @vertical-spacing @horizontal-spacing;
+}
+
+.job-details {
+    border-bottom: 1px solid @border-color;
+    margin-bottom: @vertical-spacing;
+    padding-bottom: @vertical-spacing;
+    position: relative;
+
+    img {
+        height: @company-logo-normal;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: @company-logo-normal;
+    }
+
+    h3 {
+        font-size: 20px;
+        font-weight: normal;
+        line-height: 30px;
+        margin: 0 0 0 (@horizontal-spacing + @company-logo-normal);
+    }
+
+    address {
+        display: block;
+        font-size: 14px;
+        font-style: normal;
+        line-height: 30px;
+        margin: 0 0 0 (@horizontal-spacing + @company-logo-normal);
+    }
+}
+
+.job-meta {
+    font-size: 13px;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+
+    span,
+    time {
+        display: block;
+        line-height: 30px;
+    }
+}
+
+.job-apply {
+    background: @page-background;
+    border-top: 1px solid @border-color;
+    margin: (@vertical-spacing * 2) -@horizontal-spacing -@vertical-spacing;
+    padding: (@vertical-spacing * 2) @horizontal-spacing;
+    text-align: center;
+
+    .button {
+        width: 180px;
+    }
+}

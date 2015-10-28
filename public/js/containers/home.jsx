@@ -13,7 +13,7 @@ export default class Home extends Component {
                 id,
                 title: `Job Title #${id}`,
                 company: 'That Company Inc.',
-                location: 'London, UK',
+                address: 'London, UK',
                 logo: '',
                 created: Date.now() - (id * 10 * 24 * 60 * 60 * 1000)
             });
@@ -24,18 +24,23 @@ export default class Home extends Component {
 
     render() {
         return (
-            <div className="content cf">
-                <section className="main">
-                    <header className="content-header">
+            <div className="page">
+                <header className="page-header ">
+                    <main className="main">
                         <Filter />
-                    </header>
-                    <div className="content-body">
+                    </main>
+                    <aside className="sidebar">
+                        <Link className="button button-fluid" to="/jobs/create">Post new job</Link>
+                    </aside>
+                </header>
+                <section className="page-content">
+                    <main className="main">
                         <JobList jobs={this.getJobFixtures()} />
-                    </div>
+                    </main>
+                    <aside className="sidebar">
+                        blah blah
+                    </aside>
                 </section>
-                <aside className="sidebar">
-                    <Link className="button button-fluid" to="/jobs/create">Post new job</Link>
-                </aside>
             </div>
         );
     }

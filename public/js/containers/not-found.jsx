@@ -4,7 +4,7 @@ const { Component } = React;
 export default class NotFound extends Component {
     render() {
         return (
-            <div>
+            <div clannName="page">
                 Page Not Found
             </div>
         );

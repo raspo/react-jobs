@@ -1,39 +1,68 @@
 .header {
     background: @dark-background;
-    height: @logo-height + @title-height;
+    height: @logo-height + @page-header-height;
 }
 
 .logo {
     background-size: 36px auto;
-    color: @brand-color;
     font-weight: normal;
     font-size: 20px;
     height: @logo-height;
     line-height: @logo-height;
     padding: 0 0 0 50px;
-}
 
-.content {
-    background: @content-background;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.16);
-    margin-top: -@title-height;
+    a {
+        color: @brand-color;
+    }
 }
 
 .main {
-    background: #FFF;
-    border-right: 1px solid #E6E6E6;
-    float: left;
-    width: calc(~"100% - @{sidebar-width}");
+    @media (min-width: @mobile) {
+        border-right: 1px solid #E6E6E6;
+        float: left;
+        width: calc(~"100% - @{sidebar-width}");
+    }
 }
 
 .sidebar {
-    float: left;
-    padding: @vertical-spacing @horizontal-spacing;
-    width: @sidebar-width;
+    border-top: 1px solid #E6E6E6;
+
+    @media (min-width: @mobile) {
+        border-top: none;
+        float: left;
+        width: @sidebar-width;
+    }
 }
 
-.content-header {
+.page {
+    background: @page-background;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.16);
+    margin: -@page-header-height 0 (@vertical-spacing * 3);
+}
+
+.page-header {
+    background: #FFF;
     border-bottom: 1px solid @border-color;
-    height: @title-height + 1px;
+    min-height: @page-header-height + 1px;
+
+    .main,
+    .sidebar {
+        padding: @vertical-spacing @horizontal-spacing;
+    }
+}
+
+.page-header-title {
+    color: @title-color;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 40px;
     padding: @vertical-spacing @horizontal-spacing;
+}
+
+.page-content {
+    overflow: hidden;
+
+    .sidebar {
+        padding: @vertical-spacing @horizontal-spacing;
+    }
 }
