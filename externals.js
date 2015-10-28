@@ -2,5 +2,9 @@ module.exports = [
     'classnames',
     'react',
     'react-dom',
-    'react-redux'
+    'react-router',
+    'react-redux',
+    'redux',
+    'redux-router',
+    'redux-thunk'
 ];
