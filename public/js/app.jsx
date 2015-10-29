@@ -1,24 +1,13 @@
 import '../less/app.less';
 
+import 'babel-core/polyfill';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, compose, combineReducers, applyMiddleware } from 'redux';
-import { ReduxRouter, routerStateReducer, reduxReactRouter } from 'redux-router';
-import thunk from 'redux-thunk';
-import createHistory from 'history/lib/createBrowserHistory';
-import routes from './routes';
+import { ReduxRouter } from 'redux-router';
+import store from './store';
 
-const reducer = combineReducers({
-    router: routerStateReducer
-});
-
-const store = compose(
-    applyMiddleware(thunk),
-    reduxReactRouter({ routes, createHistory })
-)(createStore)(reducer);
-
-ReactDOM.render(
+render(
     <Provider store={store}>
         <ReduxRouter />
     </Provider>,

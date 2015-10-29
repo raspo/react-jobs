@@ -1,9 +1,16 @@
 import React from 'react';
 const { Component } = React;
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { requestJobs } from '../actions/jobs';
 import Filter from '../components/filter';
 import JobList from '../components/job-list';
 
+function mapStateToProps(state) {
+
+}
+
+@connect(mapStateToProps)
 export default class Home extends Component {
     getJobFixtures() {
         const jobs = [];
@@ -45,3 +52,4 @@ export default class Home extends Component {
         );
     }
 }
+

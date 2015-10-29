@@ -6,5 +6,7 @@ module.exports = [
     'react-redux',
     'redux',
     'redux-router',
-    'redux-thunk'
+    'redux-thunk',
+    'redux-logger',
+    'isomorphic-fetch'
 ];
