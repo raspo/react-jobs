@@ -13,7 +13,8 @@
         "react/jsx-quotes": 0,
         "jsx-quotes": [2, "prefer-double"],
         "comma-dangle": [2, "never"],
-        "indent": [2, 4, {"SwitchCase": 1}]
+        "indent": [2, 4, {"SwitchCase": 1}],
+        "id-length": [2, {"min": 1, "properties": "never"}]
     },
     "plugins": [
         "react"

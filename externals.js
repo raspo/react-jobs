@@ -1,5 +1,5 @@
 module.exports = [
-    'classnames',
+    'lodash',
     'react',
     'react-dom',
     'react-router',
@@ -8,5 +8,6 @@ module.exports = [
     'redux-router',
     'redux-thunk',
     'redux-logger',
+    'classnames',
     'isomorphic-fetch'
 ];

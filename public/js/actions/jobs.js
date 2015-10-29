@@ -37,7 +37,7 @@ function shouldFetchJobs(state) {
     return true;
 }
 
-export function filterJobs(filter) {
+export function setFilter(filter) {
     return {
         type: FILTER_JOBS,
         payload: {
