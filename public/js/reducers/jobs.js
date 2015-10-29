@@ -4,10 +4,11 @@ import {
     FILTER_JOBS
 } from '../constants/action-types';
 
-export function filter(state = 'all', action) {
-    switch (action.type) {
+export function filter(state = '', action) {
+    const { type, payload } = action;
+    switch (type) {
         case FILTER_JOBS:
-            return action.filter;
+            return payload.filter;
         default:
             return state;
     }
@@ -17,7 +18,9 @@ export function jobs(state = {
     isFetching: false,
     items: []
 }, action) {
-    switch (action.type) {
+    const { type, payload } = action;
+
+    switch (type) {
         case REQUEST_JOBS:
             return {
                 ...state,
@@ -27,8 +30,8 @@ export function jobs(state = {
             return {
                 ...state,
                 isFetching: false,
-                items: action.posts,
-                lastUpdated: action.receivedAt
+                items: payload.items,
+                lastUpdated: payload.lastUpdated
             };
         default:
             return state;

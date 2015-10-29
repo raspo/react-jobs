@@ -11,36 +11,38 @@ function requestPosts() {
     };
 }
 
-function receivePosts(reddit, json) {
+function receiveJobs(json) {
     return {
         type: RECEIVE_JOBS,
-        reddit,
-        posts: json.data.children.map(child => child.data),
-        receivedAt: Date.now()
+        payload: {
+            items: json.jobs || [],
+            lastUpdated: Date.now()
+        }
     };
 }
 
 function fetchJobs() {
     return dispatch => {
         dispatch(requestPosts());
-        return fetch(`http://www.reddit.com/r/${reddit}.json`)
+        return fetch('/api/jobs')
             .then(req => req.json())
-            .then(json => dispatch(receivePosts(reddit, json)));
+            .then(json => dispatch(receiveJobs(json)));
     };
 }
 
 function shouldFetchJobs(state) {
     const jobs = state.jobs;
-    if (jobs.isFetching) {
-        return false;
-    }
+    if (jobs.isFetching) { return false; }
+    if (Date.now() - jobs.lastUpdated < 10 * 60 * 1000) { return false; }
     return true;
 }
 
 export function filterJobs(filter) {
     return {
         type: FILTER_JOBS,
-        filter
+        payload: {
+            filter
+        }
     };
 }
 

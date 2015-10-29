@@ -32,6 +32,50 @@ app.use(express.static(__dirname + '/public'));
 
 // mongoose.connect('mongodb://localhost/reactjobs');
 
+
+const router = express.Router();
+
+router.use((req, res, next) => {
+    console.log('Something is happening.');
+    next();
+});
+
+// GET /api
+router.get('/', (req, res) => {
+    res.json({ message: 'hooray! welcome to our api!' });
+});
+
+
+
+function getJobFixtures() {
+    const jobs = [];
+
+    for (var id = 0; id < 10; id++) {
+        jobs.push({
+            id,
+            title: `Job Title #${id}`,
+            company: 'That Company Inc.',
+            address: 'London, UK',
+            logo: '',
+            created: Date.now() - (id * 10 * 24 * 60 * 60 * 1000)
+        });
+    }
+
+    return jobs;
+}
+
+
+// GET /api/jobs
+router.get('/jobs', (req, res) => {
+    const jobs = getJobFixtures();
+
+    console.log('GENERATING JOBS');
+
+    res.json({ jobs });
+});
+
+app.use('/api', router);
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/public/index.html'));
 });
