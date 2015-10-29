@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
 import { routerStateReducer as router } from 'redux-router';
 
-import { jobs, filter } from './jobs.js';
+import { jobs, filter, job } from './jobs.js';
 
 const rootReducer = combineReducers({
     jobs,
     filter,
+    job,
     router
 });
 

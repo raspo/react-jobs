@@ -4,7 +4,7 @@ const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { stringScore } from '../utils';
-import { requestJobs, setFilter } from '../actions/jobs';
+import { getJobs, setFilter } from '../actions/jobs';
 import Filter from '../components/filter';
 import JobList from '../components/job-list';
 
@@ -47,7 +47,7 @@ export default class Home extends Component {
 
     componentDidMount() {
         const { dispatch } = this.props;
-        dispatch(requestJobs());
+        dispatch(getJobs());
     }
 
     handleChange(nextFilter) {

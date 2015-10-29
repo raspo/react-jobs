@@ -28,13 +28,15 @@ export default class JobList extends Component {
     }
 
     render() {
+        const { jobs } = this.props;
+
+        if (jobs.length === 0) {
+            return <div>No results found</div>;
+        }
+
         return (
             <ul className="job-list">
-                {
-                    this.props.jobs.map((job) => {
-                        return this.renderJob(job);
-                    })
-                }
+                { jobs.map(job => this.renderJob(job)) }
             </ul>
         );
     }

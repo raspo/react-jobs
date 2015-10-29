@@ -5,7 +5,7 @@ import {
         FILTER_JOBS
 } from '../constants/action-types';
 
-function requestPosts() {
+function requestJobs() {
     return {
         type: REQUEST_JOBS
     };
@@ -23,7 +23,7 @@ function receiveJobs(json) {
 
 function fetchJobs() {
     return dispatch => {
-        dispatch(requestPosts());
+        dispatch(requestJobs());
         return fetch('/api/jobs')
             .then(req => req.json())
             .then(json => dispatch(receiveJobs(json)));
@@ -46,7 +46,7 @@ export function setFilter(filter) {
     };
 }
 
-export function requestJobs() {
+export function getJobs() {
     return (dispatch, getState) => {
         if (shouldFetchJobs(getState())) {
             return dispatch(fetchJobs());

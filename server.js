@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const path = require('path');
 const express = require('express');
 const app = express();
@@ -13,7 +14,7 @@ const config = require('./webpack.config.development');
 const compiler = webpack(config);
 
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({'extended': 'true'}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride());
 
@@ -52,7 +53,7 @@ function getJobFixtures() {
 
     for (var id = 0; id < 10; id++) {
         jobs.push({
-            id,
+            id: id + '',
             title: `Job Title #${id}`,
             company: 'That Company Inc.',
             address: 'London, UK',
@@ -68,10 +69,23 @@ function getJobFixtures() {
 // GET /api/jobs
 router.get('/jobs', (req, res) => {
     const jobs = getJobFixtures();
-
-    console.log('GENERATING JOBS');
-
     res.json({ jobs });
+});
+
+// GET /api/jobs/:job_id
+router.get('/jobs/:job_id', (req, res) => {
+    const jobs = getJobFixtures();
+    const job = _.find(jobs, 'id', req.params.job_id);
+
+    if (job) {
+
+        job.type = 'full-time';
+        job.content = '<h3>About you</h3><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis possimus, assumenda quibusdam aperiam quo modi perspiciatis, voluptatibus nemo atque similique itaque deleniti harum quaerat, reprehenderit magni reiciendis ratione tempore suscipit.</p><ul><li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li><li>Blanditiis possimus, assumenda quibusdam aperiam quo modi perspiciatis, voluptatibus nemo atque similique itaque deleniti harum quaerat, reprehenderit magni reiciendis ratione tempore suscipit.</li><li>Lorem voluptatibus nemo atque similique itaque deleniti harum quaerat.</li></ul><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis possimus, assumenda quibusdam aperiam quo modi perspiciatis, voluptatibus nemo atque similique itaque deleniti harum quaerat, reprehenderit magni reiciendis ratione tempore suscipit.</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis possimus, assumenda quibusdam aperiam quo modi perspiciatis, voluptatibus nemo atque similique itaque deleniti harum quaerat, reprehenderit magni reiciendis ratione tempore suscipit.</p><h3>The job</h3><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis possimus, assumenda quibusdam aperiam quo modi perspiciatis, voluptatibus nemo atque similique itaque deleniti harum quaerat, reprehenderit magni reiciendis ratione tempore suscipit.</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis possimus, assumenda quibusdam aperiam quo modi perspiciatis, voluptatibus nemo atque similique itaque deleniti harum quaerat, reprehenderit magni reiciendis ratione tempore suscipit.</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis possimus, assumenda quibusdam aperiam quo modi perspiciatis, voluptatibus nemo atque similique itaque deleniti harum quaerat, reprehenderit magni reiciendis ratione tempore suscipit.</p>';
+
+        res.json({ job });
+    } else {
+        res.sendStatus(404);
+    }
 });
 
 app.use('/api', router);

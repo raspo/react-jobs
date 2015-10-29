@@ -1,7 +1,9 @@
 import {
     REQUEST_JOBS,
     RECEIVE_JOBS,
-    FILTER_JOBS
+    FILTER_JOBS,
+    REQUEST_JOB,
+    RECEIVE_JOB
 } from '../constants/action-types';
 
 export function filter(state = '', action) {
@@ -32,6 +34,28 @@ export function jobs(state = {
                 isFetching: false,
                 items: payload.items,
                 lastUpdated: payload.lastUpdated
+            };
+        default:
+            return state;
+    }
+}
+
+export function job(state = {
+    isFetching: true
+}, action) {
+    const { type, payload } = action;
+
+    switch (type) {
+        case REQUEST_JOB:
+            return {
+                ...state,
+                isFetching: true
+            };
+        case RECEIVE_JOB:
+            return {
+                ...state,
+                ...payload.entity,
+                isFetching: false
             };
         default:
             return state;
