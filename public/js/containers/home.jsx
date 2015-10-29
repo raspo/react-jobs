@@ -8,7 +8,11 @@ import { getJobs, setFilter } from '../actions/jobs';
 import Filter from '../components/filter';
 import JobList from '../components/job-list';
 
-function filterJobs(jobs, filter) {
+function filterJobs(jobIds, jobsById, filter) {
+    const jobs = _.map(jobIds, (jobId) => {
+        return jobsById[jobId];
+    });
+
     if (!filter) { return jobs; }
 
     const scores = _.sortBy(_.reduce(jobs, (result, job, index) => {
@@ -28,11 +32,11 @@ function filterJobs(jobs, filter) {
 }
 
 function mapStateToProps(state) {
-    const { filter, jobs } = state;
+    const { filter, jobs, jobsById, isFetchingJobs } = state;
     return {
         filter,
-        isFetching: jobs.isFetching,
-        filteredJobs: filterJobs(jobs.items, filter)
+        isFetching: isFetchingJobs,
+        filteredJobs: filterJobs(jobs, jobsById, filter)
     };
 }
 

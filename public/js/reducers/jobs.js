@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
     REQUEST_JOBS,
     RECEIVE_JOBS,
@@ -16,32 +17,62 @@ export function filter(state = '', action) {
     }
 }
 
-export function jobs(state = {
-    isFetching: false,
-    items: []
-}, action) {
-    const { type, payload } = action;
+export function isFetchingJobs(state = false, action) {
+    const { type } = action;
 
     switch (type) {
         case REQUEST_JOBS:
-            return {
-                ...state,
-                isFetching: true
-            };
+            return true;
         case RECEIVE_JOBS:
-            return {
-                ...state,
-                isFetching: false,
-                items: payload.items,
-                lastUpdated: payload.lastUpdated
-            };
+            return false;
+        default:
+            return state;
+    }
+}
+
+export function lastUpdatedJobs(state = 0, action) {
+    const { type, payload } = action;
+
+    switch (type) {
+        case RECEIVE_JOBS:
+            return payload.lastUpdated;
+        default:
+            return state;
+    }
+}
+
+export function jobs(state = [], action) {
+    const { type, payload } = action;
+
+    switch (type) {
+        case RECEIVE_JOBS:
+            return _.map(payload.entities, entity => entity.id);
+        default:
+            return state;
+    }
+}
+
+export function jobsById(state = {}, action) {
+    const { type, payload } = action;
+
+    switch (type) {
+        case RECEIVE_JOB:
+            const nextState = { ...state };
+            nextState[payload.id] = payload;
+            return nextState;
+        case RECEIVE_JOBS:
+            return _.reduce(payload.entities, (result, entity) => {
+                result[entity.id] = { ...entity };
+                return result;
+            }, {});
         default:
             return state;
     }
 }
 
 export function job(state = {
-    isFetching: true
+    isComplete: false,
+    isFetching: false
 }, action) {
     const { type, payload } = action;
 
@@ -54,7 +85,7 @@ export function job(state = {
         case RECEIVE_JOB:
             return {
                 ...state,
-                ...payload.entity,
+                ...payload,
                 isFetching: false
             };
         default:

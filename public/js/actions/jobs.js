@@ -15,7 +15,7 @@ function receiveJobs(json) {
     return {
         type: RECEIVE_JOBS,
         payload: {
-            items: json.jobs || [],
+            entities: json.jobs || [],
             lastUpdated: Date.now()
         }
     };
@@ -31,9 +31,9 @@ function fetchJobs() {
 }
 
 function shouldFetchJobs(state) {
-    const jobs = state.jobs;
-    if (jobs.isFetching) { return false; }
-    if (Date.now() - jobs.lastUpdated < 10 * 60 * 1000) { return false; }
+    const { isFetchingJobs, lastUpdatedJobs } = state;
+    if (isFetchingJobs) { return false; }
+    if (Date.now() - lastUpdatedJobs < 10 * 60 * 1000) { return false; }
     return true;
 }
 

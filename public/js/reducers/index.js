@@ -1,11 +1,21 @@
 import { combineReducers } from 'redux';
 import { routerStateReducer as router } from 'redux-router';
 
-import { jobs, filter, job } from './jobs.js';
+import {
+    filter,
+    isFetchingJobs,
+    lastUpdatedJobs,
+    jobs,
+    jobsById,
+    job
+} from './jobs.js';
 
 const rootReducer = combineReducers({
-    jobs,
     filter,
+    isFetchingJobs,
+    lastUpdatedJobs,
+    jobs,
+    jobsById,
     job,
     router
 });

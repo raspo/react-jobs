@@ -4,33 +4,23 @@
         role: "guest|editor|admin"
     },
     filter: "",
-    jobs: {
-        isFetching: true|false,
-        lastUpdated: 1234567890,
-        items: [
-            {
-                id: "1",
-                slug: "1-jobt-itle",
-                title: "Job title",
-                company: "company",
-                address: "address",
-                type: "full-time",
-                created: 12344567890,
-                logo: "logo.png"
-            }
-        ]
+    isFetchingJobs: true|false,
+    lastUpdatedJobs: 1234567890,
+    jobs: [1,2,3],
+    jobsById: {
+        "1": {
+            id: "1",
+            slug: "1-jobt-itle",
+            title: "Job title",
+            content: "Lorem ...",
+            company: "company",
+            address: "address",
+            type: "full-time",
+            created: 12344567890,
+            logo: "logo.png",
+            isComplete: false|true,
+            isEditable: true|false,
+            isFetching: true|false
+        }
     },
-    job: {
-        id: "1",
-        slug: "1-jobt-itle",
-        title: "Job title",
-        content: "Lorem ...",
-        company: "company",
-        address: "address",
-        type: "full-time",
-        created: 12344567890,
-        logo: "logo.png",
-        isEditable: true|false
-        isFetching: true|false
-    }
 }

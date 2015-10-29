@@ -17,7 +17,8 @@ function receiveJob(json) {
     return {
         type: RECEIVE_JOB,
         payload: {
-            entity: json.job || {}
+            ...json.job,
+            isComplete: true
         }
     };
 }
@@ -32,8 +33,8 @@ function fetchJob(id) {
 }
 
 function shouldFetchJob(state, id) {
-    // const { job } = state;
-    // if (job.isFetching) { return false; }
+    const { jobsById } = state;
+    if (jobsById[id] && (jobsById[id].isComplete || jobsById[id].isFetching)) { return false; }
     return true;
 }
 
