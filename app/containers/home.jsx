@@ -9,40 +9,7 @@ import Filter from 'components/filter';
 import JobList from 'components/job-list';
 import Loading from 'components/loading';
 
-function filterJobs(jobIds, jobsById, filter) {
-    const jobs = _.map(jobIds, (jobId) => {
-        return jobsById[jobId];
-    });
-
-    if (!filter) { return jobs; }
-
-    const scores = _.sortBy(_.reduce(jobs, (result, job, index) => {
-        let score = stringScore(job.title, filter);
-        score += stringScore(job.companyName, filter);
-        score += stringScore(job.address, filter);
-        result.push({score, index});
-        return result;
-    }, []), 'score');
-
-    return _.reduce(scores, (result, score) => {
-        if (score.score > 0) {
-            result.push(jobs[score.index]);
-        }
-        return result;
-    }, []);
-}
-
-function mapStateToProps(state) {
-    const { filter, jobs, jobsById, isFetchingJobs } = state;
-    return {
-        filter,
-        isFetching: isFetchingJobs,
-        filteredJobs: filterJobs(jobs, jobsById, filter)
-    };
-}
-
-@connect(mapStateToProps)
-export default class Home extends Component {
+class Home extends Component {
     static propTypes = {
         isFetching: PropTypes.bool.isRequired,
         filter: PropTypes.string.isRequired,
@@ -85,3 +52,36 @@ export default class Home extends Component {
     }
 }
 
+function filterJobs(jobIds, jobsById, filter) {
+    const jobs = _.map(jobIds, (jobId) => {
+        return jobsById[jobId];
+    });
+
+    if (!filter) { return jobs; }
+
+    const scores = _.sortBy(_.reduce(jobs, (result, job, index) => {
+        let score = stringScore(job.title, filter);
+        score += stringScore(job.companyName, filter);
+        score += stringScore(job.address, filter);
+        result.push({score, index});
+        return result;
+    }, []), 'score');
+
+    return _.reduce(scores, (result, score) => {
+        if (score.score > 0) {
+            result.push(jobs[score.index]);
+        }
+        return result;
+    }, []);
+}
+
+function homeSelector(state) {
+    const { filter, jobs, jobsById, isFetchingJobs } = state;
+    return {
+        filter,
+        isFetching: isFetchingJobs,
+        filteredJobs: filterJobs(jobs, jobsById, filter)
+    };
+}
+
+export default connect(homeSelector)(Home)

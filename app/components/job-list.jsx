@@ -3,7 +3,7 @@ const { Component, PropTypes } = React;
 import { Link } from 'react-router';
 import { simpleDate } from 'utils';
 
-export default class JobList extends Component {
+class JobList extends Component {
     static propTypes = {
         jobs: PropTypes.array.isRequired,
         isFiltered: PropTypes.bool.isRequired
@@ -47,3 +47,5 @@ export default class JobList extends Component {
         );
     }
 }
+
+export default JobList

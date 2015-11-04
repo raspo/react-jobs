@@ -6,13 +6,7 @@ import { simpleDate } from 'utils';
 import { getJob } from 'actions/job';
 import Loading from 'components/loading';
 
-function mapStateToProps(state) {
-    const { job } = state;
-    return { ...job };
-}
-
-@connect(mapStateToProps)
-export default class Job extends Component {
+class Job extends Component {
     static propTypes = {
         title: PropTypes.string,
         description: PropTypes.string,
@@ -80,3 +74,10 @@ export default class Job extends Component {
         );
     }
 }
+
+function jobSelector(state) {
+    const { job } = state;
+    return { ...job };
+}
+
+export default connect(jobSelector)(Job)

@@ -1,7 +1,7 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 
-export default class Filter extends Component {
+class Filter extends Component {
     static propTypes = {
         value: PropTypes.string.isRequired,
         onChange: PropTypes.func.isRequired
@@ -22,3 +22,5 @@ export default class Filter extends Component {
         );
     }
 }
+
+export default Filter

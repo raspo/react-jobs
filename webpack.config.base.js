@@ -1,11 +1,11 @@
 const webpack = require('webpack');
-const EXTERNALS = require('./externals.js');
+const VENDORS = require('./vendors.js');
 
 module.exports = {
     context: __dirname,
     entry: {
         app: ['./app/app.jsx'],
-        vendors: EXTERNALS
+        vendors: VENDORS
     },
     output: {
         path: __dirname + '/public/js',
@@ -17,10 +17,7 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 loader: 'babel',
-                exclude: /node_modules/,
-                query: {
-                    optional: ['es7.decorators', 'es7.classProperties']
-                }
+                exclude: /node_modules/
             },
             {
                 test: /\.less$/,
