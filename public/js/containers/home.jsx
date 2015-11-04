@@ -7,6 +7,7 @@ import { stringScore } from '../utils';
 import { getJobs, setFilter } from '../actions/jobs';
 import Filter from '../components/filter';
 import JobList from '../components/job-list';
+import Loading from '../components/loading';
 
 function filterJobs(jobIds, jobsById, filter) {
     const jobs = _.map(jobIds, (jobId) => {
@@ -17,7 +18,7 @@ function filterJobs(jobIds, jobsById, filter) {
 
     const scores = _.sortBy(_.reduce(jobs, (result, job, index) => {
         let score = stringScore(job.title, filter);
-        score += stringScore(job.company, filter);
+        score += stringScore(job.companyName, filter);
         score += stringScore(job.address, filter);
         result.push({score, index});
         return result;
@@ -60,6 +61,7 @@ export default class Home extends Component {
 
     render() {
         const { filter, isFetching, filteredJobs } = this.props;
+        const isFiltered = !!filter;
         return (
             <div className="page">
                 <header className="page-header ">
@@ -72,10 +74,10 @@ export default class Home extends Component {
                 </header>
                 <section className="page-content">
                     <main className="main">
-                        {isFetching ? 'Is Fetching' : <JobList jobs={filteredJobs} />}
+                        {isFetching ? <Loading /> : <JobList jobs={filteredJobs} isFiltered={isFiltered} />}
                     </main>
                     <aside className="sidebar">
-                        blah blah
+
                     </aside>
                 </section>
             </div>

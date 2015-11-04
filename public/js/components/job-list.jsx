@@ -5,22 +5,24 @@ import { simpleDate } from '../utils';
 
 export default class JobList extends Component {
     static propTypes = {
-        jobs: PropTypes.array.isRequired
+        jobs: PropTypes.array.isRequired,
+        isFiltered: PropTypes.bool.isRequired
     }
 
     renderJob(job) {
-        const jobUrl = `/jobs/${job.id}`;
-        const logoURI = job.logo || '/img/company-logo.png';
+        const { id, title, companyName, companyLogo, address, created } = job;
+        const jobUrl = `/jobs/${id}`;
+        const logoURI = companyLogo || '/img/company-logo.png';
 
         return (
-            <li key={job.id} className="job-list-item">
+            <li key={id} className="job-list-item">
                 <Link to={jobUrl}>
-                    <img src={logoURI} alt={job.company} className="job-list-item-logo" />
-                    <h2 className="job-list-item-title">{job.title}</h2>
-                    <h3 className="job-list-item-company">{job.company}</h3>
+                    <img src={logoURI} alt={companyName} className="job-list-item-logo" />
+                    <h2 className="job-list-item-title">{title}</h2>
+                    <h3 className="job-list-item-company">{companyName}</h3>
                     <div className="job-list-item-meta">
-                        <time>{simpleDate(job.created)}</time>
-                        <address>{job.address}</address>
+                        <time>{simpleDate(created)}</time>
+                        <address>{address}</address>
                     </div>
                 </Link>
             </li>
@@ -28,10 +30,14 @@ export default class JobList extends Component {
     }
 
     render() {
-        const { jobs } = this.props;
+        const { jobs, isFiltered } = this.props;
 
         if (jobs.length === 0) {
-            return <div>No results found</div>;
+            if (isFiltered) {
+                return <div className="no-results">No listings match your search criteria.</div>;
+            }
+
+            return <div className="no-results">There are no job listings at this time.</div>;
         }
 
         return (

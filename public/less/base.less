@@ -1,6 +1,7 @@
 body {
     background: @body-background;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: @base-font-size;
     color: @text-color;
 }
 
@@ -74,4 +75,18 @@ article {
         height: 1px;
         margin: 10px 0;
     }
+}
+
+.loading {
+    color: @muted-color;
+    font-size: 13px;
+    padding: @vertical-spacing @horizontal-spacing;
+    text-align: center;
+}
+
+.no-results {
+    color: @muted-color;
+    font-size: 15px;
+    padding: @vertical-spacing @horizontal-spacing;
+    text-align: center;
 }

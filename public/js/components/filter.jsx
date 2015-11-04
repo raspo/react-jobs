@@ -14,7 +14,11 @@ export default class Filter extends Component {
 
     render() {
         return (
-            <input type="text" className="input-filter" onKeyUp={this.handleKeyUp.bind(this)} defaultValue={this.props.value} />
+            <input type="text"
+                className="input-filter"
+                onKeyUp={this.handleKeyUp.bind(this)}
+                defaultValue={this.props.value}
+                placeholder="Filter jobs, companies, location..." />
         );
     }
 }
