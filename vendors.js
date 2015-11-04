@@ -5,6 +5,7 @@ module.exports = [
     'react-router',
     'react-redux',
     'redux',
+    'history',
     'redux-router',
     'redux-thunk',
     'redux-logger',
