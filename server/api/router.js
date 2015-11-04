@@ -2,11 +2,6 @@ const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
 
-router.use((req, res, next) => {
-    console.log('Something is happening on the API router.');
-    next();
-});
-
 // GET /api
 router.get('/', (req, res) => {
     res.json({ message: 'hooray! welcome to our api!' });
