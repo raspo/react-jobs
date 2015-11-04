@@ -4,12 +4,12 @@ const EXTERNALS = require('./externals.js');
 module.exports = {
     context: __dirname,
     entry: {
-        app: ['./public/js/app.jsx'],
+        app: ['./app/app.jsx'],
         vendors: EXTERNALS
     },
     output: {
-        path: __dirname + '/public/dist',
-        publicPath: '/dist/',
+        path: __dirname + '/public/js',
+        publicPath: '/js/',
         filename: 'app.js'
     },
     module: {
@@ -34,11 +34,11 @@ module.exports = {
     ],
     resolve: {
         alias: {
-            root: __dirname + '/public/js'
+            root: __dirname + '/app'
         },
         extensions: ['', '.js', '.jsx'],
         modulesDirectories: [
-            'public/js/',
+            'app/',
             'node_modules'
         ]
     },
