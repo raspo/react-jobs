@@ -1,7 +1,7 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 import { Link } from 'react-router';
-import { simpleDate } from '../utils';
+import { simpleDate } from 'utils';
 
 export default class JobList extends Component {
     static propTypes = {

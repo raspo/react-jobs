@@ -8,7 +8,7 @@ import {
     jobs,
     jobsById,
     job
-} from './jobs.js';
+} from 'reducers/jobs.js';
 
 const rootReducer = combineReducers({
     filter,

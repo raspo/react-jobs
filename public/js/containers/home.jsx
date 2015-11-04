@@ -3,11 +3,11 @@ import React from 'react';
 const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { stringScore } from '../utils';
-import { getJobs, setFilter } from '../actions/jobs';
-import Filter from '../components/filter';
-import JobList from '../components/job-list';
-import Loading from '../components/loading';
+import { stringScore } from 'utils';
+import { getJobs, setFilter } from 'actions/jobs';
+import Filter from 'components/filter';
+import JobList from 'components/job-list';
+import Loading from 'components/loading';
 
 function filterJobs(jobIds, jobsById, filter) {
     const jobs = _.map(jobIds, (jobId) => {

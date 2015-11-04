@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import AppLayout from './containers/app-layout';
-import Home from './containers/home';
-import Create from './containers/create';
-import Job from './containers/job';
-import NotFound from './containers/not-found';
+import AppLayout from 'containers/app-layout';
+import Home from 'containers/home';
+import Create from 'containers/create';
+import Job from 'containers/job';
+import NotFound from 'containers/not-found';
 
 function requireAuth(nextState, replaceState) {
     console.log('auth is required');

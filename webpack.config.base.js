@@ -33,6 +33,9 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
     ],
     resolve: {
+        alias: {
+            root: __dirname + '/public/js'
+        },
         extensions: ['', '.js', '.jsx'],
         modulesDirectories: [
             'public/js/',
