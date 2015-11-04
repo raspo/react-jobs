@@ -1,10 +1,9 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
-import Header from '../components/header';
+import Header from 'components/header';
 
-@connect(state => ({ routerState: state.router }))
-export default class AppLayout extends Component {
+class AppLayout extends Component {
     static propTypes = {
         children: PropTypes.node.isRequired
     }
@@ -20,3 +19,11 @@ export default class AppLayout extends Component {
         );
     }
 }
+
+function layoutSelector(state) {
+    return {
+        routerState: state.router
+    };
+}
+
+export default connect(layoutSelector)(AppLayout)

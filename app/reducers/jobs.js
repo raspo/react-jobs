@@ -5,7 +5,7 @@ import {
     FILTER_JOBS,
     REQUEST_JOB,
     RECEIVE_JOB
-} from '../constants/action-types';
+} from 'constants/action-types';
 
 export function filter(state = '', action) {
     const { type, payload } = action;

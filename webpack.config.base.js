@@ -1,15 +1,15 @@
 const webpack = require('webpack');
-const EXTERNALS = require('./externals.js');
+const VENDORS = require('./vendors.js');
 
 module.exports = {
     context: __dirname,
     entry: {
-        app: ['./public/js/app.jsx'],
-        vendors: EXTERNALS
+        app: ['./app/app.jsx'],
+        vendors: VENDORS
     },
     output: {
-        path: __dirname + '/public/dist',
-        publicPath: '/dist/',
+        path: __dirname + '/public/js',
+        publicPath: '/js/',
         filename: 'app.js'
     },
     module: {
@@ -17,10 +17,7 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 loader: 'babel',
-                exclude: /node_modules/,
-                query: {
-                    optional: ['es7.decorators', 'es7.classProperties']
-                }
+                exclude: /node_modules/
             },
             {
                 test: /\.less$/,
@@ -33,9 +30,12 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
     ],
     resolve: {
+        alias: {
+            root: __dirname + '/app'
+        },
         extensions: ['', '.js', '.jsx'],
         modulesDirectories: [
-            'public/js/',
+            'app/',
             'node_modules'
         ]
     },

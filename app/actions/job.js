@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch';
 import {
     REQUEST_JOB,
     RECEIVE_JOB
-} from '../constants/action-types';
+} from 'constants/action-types';
 
 function requestJob(id) {
     return {
