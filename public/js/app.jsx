@@ -1,24 +1,15 @@
 import '../less/app.less';
 
+import 'babel-core/polyfill';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Router, Route, IndexRoute } from 'react-router';
-import history from './history';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { ReduxRouter } from 'redux-router';
+import store from './store';
 
-import AppLayout from './containers/app-layout';
-import Home from './containers/home';
-import Create from './containers/create';
-import Job from './containers/job';
-import NotFound from './containers/not-found';
-
-ReactDOM.render(
-    <Router history={history}>
-        <Route path="/" component={AppLayout}>
-            <IndexRoute component={Home} />
-            <Route path="jobs/create" component={Create} />
-            <Route path="jobs/:id" component={Job} />
-            <Route path="*" component={NotFound} />
-        </Route>
-    </Router>,
+render(
+    <Provider store={store}>
+        <ReduxRouter />
+    </Provider>,
     document.getElementById('app')
 );

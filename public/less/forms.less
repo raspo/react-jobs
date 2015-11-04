@@ -1,8 +1,11 @@
-input {
+input,
+select,
+textarea {
     background: #FFF;
     border: 1px solid @border-color;
     border-radius: @border-radius;
-    height: 40px;
+    font-size: 13px;
+    height: 34px;
     padding: 5px 10px;
     width: 100%;
 
@@ -15,13 +18,17 @@ button:focus,
 button:active,
 input:focus,
 input:active,
+select:focus,
+select:active,
 textarea:focus {
     outline: none;
 }
 
 textarea{
-    resize: none;
+    height: 200px;
     overflow: auto;
+    padding: 10px;
+    resize: none;
 
     &:focus{
         resize: both;
@@ -33,9 +40,12 @@ textarea{
     border: 1px solid darken(@cta-color, 10%);
     border-radius: @border-radius;
     color: #FFF;
+    cursor: pointer;
     display: inline-block;
+    font-size: @base-font-size;
     height: 40px;
     line-height: 40px;
+    padding: 0 @horizontal-spacing;
     text-shadow: 0 1px 0 darken(@cta-color, 10%);
     text-transform: uppercase;
     transition: background 0.2s ease-in-out;
@@ -48,4 +58,97 @@ textarea{
         text-align: center;
         width: 100%;
     }
+}
+
+form {
+    legend {
+        display: block;
+        font-size: 18px;
+        height: 60px;
+        line-height: 40px;
+        padding: @vertical-spacing 0 0 @label-width + @horizontal-spacing;
+        position: relative;
+        width: 100%;
+    }
+
+    fieldset {
+        display: block;
+        border-bottom: 1px solid @border-color;
+        padding: @vertical-spacing @horizontal-spacing;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
+
+    label {
+        clear: both;
+        display: block;
+        padding: 0 0 @vertical-spacing;
+        overflow: hidden;
+
+        span {
+            float: left;
+            line-height: 20px;
+            padding: 7px 0 0;
+            width: @label-width;
+        }
+
+        > div {
+            padding-left: @label-width + @horizontal-spacing;
+        }
+
+        .instructions {
+            color: @muted-color;
+            font-size: 12px;
+            line-height: 1.3em;
+            padding-top: 7px;
+        }
+    }
+
+    .button {
+        float: right;
+    }
+}
+
+.input-filter {
+    height: 40px;
+}
+
+.field-with-button {
+    background: #fff;
+    border: 1px solid @border-color;
+    border-radius: @border-radius;
+    position: relative;
+
+    input {
+        border: 0;
+        border-radius: 0;
+        width: calc(~"100% - 100px");
+    }
+
+    button {
+        background: @page-background;
+        border: 0;
+        border-left: 1px solid @border-color;
+        border-radius: 0 @border-radius @border-radius 0;
+        cursor: pointer;
+        display: block;
+        font-size: 12px;
+        height: 34px;
+        position: absolute;
+        right: 0;
+        text-transform: uppercase;
+        top: 0;
+        width: 100px;
+
+        &:hover {
+            background: darken(@page-background, 5%)
+        }
+    }
+}
+
+.company-logo {
+    height: @company-logo-normal;
+    width: @company-logo-normal;
 }
