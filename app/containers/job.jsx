@@ -80,4 +80,4 @@ function jobSelector(state) {
     return { ...job };
 }
 
-export default connect(jobSelector)(Job)
+export default connect(jobSelector)(Job);

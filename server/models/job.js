@@ -17,21 +17,20 @@ const JobSchema = new Schema({
     companyName: String,
     companyWebsite: String,
     companyTwitter: String,
-    companyLogo: String
+    companyLogo: String,
+    publishedAt: Date
 });
 
 JobSchema.plugin(timestamps);
 
 JobSchema.options.toObject = {
-    transform: (doc, ret, options) => {
+    transform: (doc, ret) => {
         delete ret._id;
         delete ret.__v;
         return ret;
     }
 };
 
-JobSchema.virtual('id').get(function() {
-    return this._id;
-});
+JobSchema.virtual('id').get(() => this._id);
 
 module.exports = mongoose.model('Job', JobSchema);

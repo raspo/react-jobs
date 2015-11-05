@@ -26,4 +26,4 @@ function layoutSelector(state) {
     };
 }
 
-export default connect(layoutSelector)(AppLayout)
+export default connect(layoutSelector)(AppLayout);

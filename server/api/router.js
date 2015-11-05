@@ -1,8 +1,7 @@
-const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
 
-const JobSchema = require('../models/job.js');
+const JobModel = require('../models/job.js');
 
 router.use((req, res, next) => {
     // TODO add logging
@@ -16,24 +15,29 @@ router.get('/', (req, res) => {
 
 // GET /api/jobs
 router.get('/jobs', (req, res) => {
-    JobSchema.find((err, jobs) => {
+    JobModel.find((err, jobs) => {
         if (err) { res.send(err); }
 
-        jobs = jobs.map(function(job) {
+        const transformedJobs = jobs.map((job) => {
             return job.toObject({transform: true, virtuals: true});
         });
 
-        res.json({ jobs });
+        res.json({ jobs: transformedJobs });
     });
 });
 
 // GET /api/jobs/:job_id
 router.get('/jobs/:job_id', (req, res) => {
-    JobSchema.findOne({_id: req.params.job_id}, (err, job) => {
+    JobModel.findOne({_id: req.params.job_id}, (err, job) => {
         if (err) { res.send(err); }
 
         if (job) {
-            res.json({ job: job.toObject({transform: true, virtuals: true}) })
+            res.json({
+                job: job.toObject({
+                    transform: true,
+                    virtuals: true
+                })
+            });
         } else {
             res.sendStatus(404);
         }
@@ -42,7 +46,7 @@ router.get('/jobs/:job_id', (req, res) => {
 
 // POST /api/jobs
 router.post('/jobs', (req, res) => {
-    const job = new JobSchema(req.body);
+    const job = new JobModel(req.body);
 
     job.save((err) => {
         if (err) { res.send(err); }

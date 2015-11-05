@@ -11,6 +11,10 @@ export default class Create extends Component {
         };
     }
 
+    handleSubmit(event) {
+        event.preventDefault();
+    }
+
     render() {
         return (
             <div className="page">
@@ -19,7 +23,7 @@ export default class Create extends Component {
                 </header>
                 <section className="page-content">
                     <main className="main">
-                        <form>
+                        <form onSubmit={this.handleSubmit}>
                             <fieldset>
                                 <label htmlFor="field-job-title">
                                     <span>Job title</span>

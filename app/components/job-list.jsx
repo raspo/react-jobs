@@ -48,4 +48,4 @@ class JobList extends Component {
     }
 }
 
-export default JobList
+export default JobList;
