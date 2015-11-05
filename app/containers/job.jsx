@@ -14,7 +14,7 @@ class Job extends Component {
         companyWebsite: PropTypes.string,
         address: PropTypes.string,
         type: PropTypes.string,
-        created: PropTypes.number,
+        createdAt: PropTypes.string,
         logo: PropTypes.string,
         isFetching: PropTypes.bool.isRequired,
         routeParams: PropTypes.object.isRequired,
@@ -37,7 +37,7 @@ class Job extends Component {
             return <Loading />;
         }
 
-        const { title, companyName, companyWebsite, address, type, created, logo } = this.props;
+        const { title, companyName, companyWebsite, address, type, createdAt, logo } = this.props;
         const logoURI = logo || '/img/company-logo.png';
 
         return (
@@ -53,7 +53,7 @@ class Job extends Component {
                             <address>{address}</address>
                             <div className="job-meta">
                                 <span>{type}</span>
-                                <time>{simpleDate(created)}</time>
+                                <time>{simpleDate(createdAt)}</time>
                             </div>
                         </header>
                         <article dangerouslySetInnerHTML={this.renderContent()}></article>

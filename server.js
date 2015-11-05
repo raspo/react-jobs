@@ -17,7 +17,7 @@ app.use(methodOverride());
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(express.static(__dirname + '/public'));
 
-// mongoose.connect('mongodb://localhost/reactjobs');
+mongoose.connect('mongodb://localhost/reactjobs');
 
 app.use('/api', apiRouter);
 

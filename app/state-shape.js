@@ -19,7 +19,7 @@
             companyLogo: "logo.png",
             address: "address",
             type: "full-time",
-            created: 12344567890,
+            createdAt: 12344567890,
             isComplete: false|true,
             isEditable: true|false,
             isFetching: true|false
