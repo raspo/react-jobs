@@ -1,7 +1,9 @@
 import fetch from 'isomorphic-fetch';
 import {
     REQUEST_JOB,
-    RECEIVE_JOB
+    RECEIVE_JOB,
+    NEW_JOB,
+    RECEIVE_NEW_JOB
 } from 'constants/action-types';
 
 function requestJob(id) {
@@ -13,12 +15,30 @@ function requestJob(id) {
     };
 }
 
+function newJob(data) {
+    return {
+        type: NEW_JOB,
+        payload: data
+    };
+}
+
+function receiveNewJob(json) {
+    return {
+        type: RECEIVE_NEW_JOB,
+        payload: {
+            ...json.job,
+            isComplete: true
+        }
+    };
+}
+
 function receiveJob(json) {
     return {
         type: RECEIVE_JOB,
         payload: {
             ...json.job,
-            isComplete: true
+            isComplete: true,
+            isPublished: false
         }
     };
 }
@@ -43,5 +63,21 @@ export function getJob(id) {
         if (shouldFetchJob(getState(), id)) {
             return dispatch(fetchJob(id));
         }
+    };
+}
+
+export function createJob(data) {
+    return (dispatch) => {
+        dispatch(newJob(data));
+        return fetch('/api/jobs/', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(req => req.json())
+        .then(json => dispatch(receiveNewJob(json)));
     };
 }

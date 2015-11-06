@@ -59,6 +59,8 @@ class JobView extends Component {
                             <li><Link to="/">Report this listing</Link></li>
                             <li className="separator"></li>
                             <li><Link to="/">Go back to job board</Link></li>
+                            <li className="separator"></li>
+                            <li><Link to="edit">Edit this listing</Link></li>
                         </ul>
                     </aside>
                 </section>
