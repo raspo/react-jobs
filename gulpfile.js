@@ -24,15 +24,22 @@ function logChange(event) {
     gutil.log(gutil.colors.yellow(event.type), relativePath);
 }
 
+function logWebpackBuild(err, stats) {
+    if (err) { throw new gutil.PluginError('webpack:dev', err); }
+    if (stats.compilation.errors.length) {
+        stats.compilation.errors.forEach((error) => {
+            gutil.log(gutil.colors.yellow('webpack'), gutil.colors.red(error.message));
+        });
+    }
+    const timediff = (stats.endTime - stats.startTime) / 1000;
+    gutil.log(`webpack build took ${timediff} s`);
+}
+
 gulp.task('webpack:dev', () => {
     const webpackConfigDev = require('./webpack.config.development');
 
     return gulp.src('./app.jsx')
-        .pipe(webpack(webpackConfigDev, null, function(err, stats) {
-            if (err) { throw new gutil.PluginError('webpack:dev', err) };
-            const timediff = (stats.endTime - stats.startTime) / 1000;
-            gutil.log(`webpack build took ${timediff} s`);
-        }))
+        .pipe(webpack(webpackConfigDev, null, logWebpackBuild))
         .pipe(gulp.dest('./public/js'));
 });
 
@@ -40,11 +47,7 @@ gulp.task('webpack:prod', () => {
     const webpackConfigProd = require('./webpack.config.production');
 
     return gulp.src('./app.jsx')
-        .pipe(webpack(webpackConfigProd, null, function(err, stats) {
-            if (err) { throw new gutil.PluginError('webpack:prod', err) };
-            const timediff = (stats.endTime - stats.startTime) / 1000;
-            gutil.log(`webpack build took ${timediff} s`);
-        }))
+        .pipe(webpack(webpackConfigProd, null, logWebpackBuild))
         .pipe(gulp.dest('./public/js'));
 });
 
