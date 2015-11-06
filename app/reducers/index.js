@@ -10,6 +10,10 @@ import {
     job
 } from 'reducers/jobs.js';
 
+import {
+    preview
+} from 'reducers/preview.js';
+
 const rootReducer = combineReducers({
     filter,
     isFetchingJobs,
@@ -17,6 +21,7 @@ const rootReducer = combineReducers({
     jobs,
     jobsById,
     job,
+    preview,
     router
 });
 

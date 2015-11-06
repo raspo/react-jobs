@@ -25,4 +25,16 @@
             isFetching: true|false
         }
     },
+    preview: {
+        title: "Job title",
+        url: "",
+        description: "Lorem ...",
+        companyName: "company",
+        companyWebsite: "http://",
+        companyLogo: "logo.png",
+        address: "address",
+        type: "full-time",
+        createdAt: 12344567890,
+        isPreview: false|true,
+    }
 }
