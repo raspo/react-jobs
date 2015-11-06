@@ -5,6 +5,7 @@ import Header from 'components/header';
 
 class AppLayout extends Component {
     static propTypes = {
+        app: PropTypes.object.isRequired,
         children: PropTypes.node.isRequired
     }
 
@@ -21,9 +22,8 @@ class AppLayout extends Component {
 }
 
 function layoutSelector(state) {
-    return {
-        routerState: state.router
-    };
+    const { app } = state;
+    return { app };
 }
 
 export default connect(layoutSelector)(AppLayout);

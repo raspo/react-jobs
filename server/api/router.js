@@ -5,6 +5,7 @@ const JobModel = require('../models/job.js');
 
 router.use((req, res, next) => {
     // TODO add logging
+    // TODO check for expiration dates
     next();
 });
 
@@ -15,7 +16,9 @@ router.get('/', (req, res) => {
 
 // GET /api/jobs
 router.get('/jobs', (req, res) => {
-    JobModel.find((err, jobs) => {
+    JobModel.find({
+        publishedAt: { $ne: null }
+    }, (err, jobs) => {
         if (err) { res.send(err); }
 
         const transformedJobs = jobs.map((job) => {
@@ -23,6 +26,22 @@ router.get('/jobs', (req, res) => {
         });
 
         res.json({ jobs: transformedJobs });
+    });
+});
+
+// POST /api/jobs
+router.post('/jobs', (req, res) => {
+    const job = new JobModel(req.body);
+
+    job.save((err) => {
+        if (err) { res.send(err); }
+
+        res.json({
+            job: job.toObject({
+                transform: true,
+                virtuals: true
+            })
+        });
     });
 });
 
@@ -44,14 +63,30 @@ router.get('/jobs/:job_id', (req, res) => {
     });
 });
 
-// POST /api/jobs
-router.post('/jobs', (req, res) => {
-    const job = new JobModel(req.body);
-
-    job.save((err) => {
+// POST /api/jobs/:job_id/publish
+router.post('/jobs/:job_id/publish', (req, res) => {
+    JobModel.findOne({_id: req.params.job_id}, (err, job) => {
         if (err) { res.send(err); }
 
-        res.json(job.toJSON());
+        if (job) {
+            const now = Date.now();
+            const expirationDate = now + (30 * 24 * 60 * 60 * 1000);
+
+            job.publishedAt = new Date(now);
+            job.expiringAt = new Date(expirationDate);
+            job.save((error) => {
+                if (error) { res.send(error); }
+
+                res.json({
+                    job: job.toObject({
+                        transform: true,
+                        virtuals: true
+                    })
+                });
+            });
+        } else {
+            res.sendStatus(404);
+        }
     });
 });
 

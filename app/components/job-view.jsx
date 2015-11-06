@@ -6,13 +6,14 @@ import Loading from 'components/loading';
 
 class JobView extends Component {
     static propTypes = {
+        slug: PropTypes.string,
         title: PropTypes.string,
         description: PropTypes.string,
         companyName: PropTypes.string,
         companyWebsite: PropTypes.string,
         address: PropTypes.string,
         type: PropTypes.string,
-        createdAt: PropTypes.string,
+        publishedAt: PropTypes.string,
         logo: PropTypes.string,
         isFetching: PropTypes.bool.isRequired,
         isPreview: PropTypes.bool
@@ -29,8 +30,9 @@ class JobView extends Component {
             return <Loading />;
         }
 
-        const { title, companyName, companyWebsite, address, type, createdAt, logo } = this.props;
+        const { slug, title, companyName, companyWebsite, address, type, publishedAt, logo } = this.props;
         const logoURI = logo || '/img/company-logo.png';
+        const editUrl = `/jobs/${slug}/edit`;
 
         return (
             <div className="page">
@@ -45,7 +47,7 @@ class JobView extends Component {
                             <address>{address}</address>
                             <div className="job-meta">
                                 <span>{type}</span>
-                                <time>{simpleDate(createdAt)}</time>
+                                <time>{simpleDate(publishedAt)}</time>
                             </div>
                         </header>
                         <article dangerouslySetInnerHTML={this.renderContent()}></article>
@@ -60,7 +62,7 @@ class JobView extends Component {
                             <li className="separator"></li>
                             <li><Link to="/">Go back to job board</Link></li>
                             <li className="separator"></li>
-                            <li><Link to="edit">Edit this listing</Link></li>
+                            <li><Link to={editUrl}>Edit this listing</Link></li>
                         </ul>
                     </aside>
                 </section>

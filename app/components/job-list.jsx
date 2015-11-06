@@ -10,8 +10,8 @@ class JobList extends Component {
     }
 
     renderJob(job) {
-        const { id, title, companyName, companyLogo, address, createdAt } = job;
-        const jobUrl = `/jobs/${id}`;
+        const { id, slug, title, companyName, companyLogo, address, createdAt } = job;
+        const jobUrl = `/jobs/${slug}`;
         const logoURI = companyLogo || '/img/company-logo.png';
 
         return (

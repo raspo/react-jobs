@@ -79,7 +79,7 @@ export function job(state = {
     switch (type) {
         case REQUEST_JOB:
             return {
-                ...state,
+                isComplete: false,
                 isFetching: true
             };
         case RECEIVE_JOB:

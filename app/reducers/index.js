@@ -2,6 +2,10 @@ import { combineReducers } from 'redux';
 import { routerStateReducer as router } from 'redux-router';
 
 import {
+    app
+} from 'reducers/app.js';
+
+import {
     filter,
     isFetchingJobs,
     lastUpdatedJobs,
@@ -10,18 +14,14 @@ import {
     job
 } from 'reducers/jobs.js';
 
-import {
-    preview
-} from 'reducers/preview.js';
-
 const rootReducer = combineReducers({
+    app,
     filter,
     isFetchingJobs,
     lastUpdatedJobs,
     jobs,
     jobsById,
     job,
-    preview,
     router
 });
 

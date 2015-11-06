@@ -1,16 +1,16 @@
 import {
-    SET_PREVIEW,
-    UNSET_PREVIEW
+    REDIRECT_COMPLETE,
+    JOB_NOT_FOUND
 } from 'constants/action-types';
 
-export function preview(state = null, action) {
+export function app(state = {}, action) {
     const { type, payload } = action;
 
     switch (type) {
-        case SET_PREVIEW:
+        case JOB_NOT_FOUND:
             return { ...payload };
-        case UNSET_PREVIEW:
-            return null;
+        case REDIRECT_COMPLETE:
+            return {};
         default:
             return state;
     }

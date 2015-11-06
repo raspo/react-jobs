@@ -3,7 +3,8 @@ import {
     REQUEST_JOB,
     RECEIVE_JOB,
     NEW_JOB,
-    RECEIVE_NEW_JOB
+    RECEIVE_NEW_JOB,
+    JOB_NOT_FOUND
 } from 'constants/action-types';
 
 function requestJob(id) {
@@ -22,6 +23,15 @@ function newJob(data) {
     };
 }
 
+function notFound() {
+    return {
+        type: JOB_NOT_FOUND,
+        payload: {
+            redirect: '/'
+        }
+    };
+}
+
 function receiveNewJob(json) {
     return {
         type: RECEIVE_NEW_JOB,
@@ -37,8 +47,7 @@ function receiveJob(json) {
         type: RECEIVE_JOB,
         payload: {
             ...json.job,
-            isComplete: true,
-            isPublished: false
+            isComplete: true
         }
     };
 }
@@ -47,7 +56,12 @@ function fetchJob(id) {
     return dispatch => {
         dispatch(requestJob(id));
         return fetch(`/api/jobs/${id}`)
-            .then(req => req.json())
+            .then(res => {
+                if (res.status >= 400) {
+                    dispatch(notFound());
+                }
+                return res.json();
+            })
             .then(json => dispatch(receiveJob(json)));
     };
 }

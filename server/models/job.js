@@ -1,7 +1,10 @@
+/* eslint func-names:0 */
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const shortid = require('shortid');
 const timestamps = require('mongoose-timestamp');
+const shortid = require('shortid');
+const slug = require('slug');
 
 const JobSchema = new Schema({
     _id: {
@@ -18,7 +21,8 @@ const JobSchema = new Schema({
     companyWebsite: String,
     companyTwitter: String,
     companyLogo: String,
-    publishedAt: Date
+    publishedAt: Date,
+    expiringAt: Date
 });
 
 JobSchema.plugin(timestamps);
@@ -31,6 +35,12 @@ JobSchema.options.toObject = {
     }
 };
 
-JobSchema.virtual('id').get(() => this._id);
+JobSchema.virtual('slug').get(function() {
+    return this._id + '-' + slug(this.title);
+});
+
+JobSchema.virtual('id').get(function() {
+    return this._id;
+});
 
 module.exports = mongoose.model('Job', JobSchema);
