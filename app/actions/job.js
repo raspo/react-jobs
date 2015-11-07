@@ -1,7 +1,10 @@
 import fetch from 'isomorphic-fetch';
 import {
     REQUEST_JOB,
-    RECEIVE_JOB
+    RECEIVE_JOB,
+    NEW_JOB,
+    RECEIVE_NEW_JOB,
+    JOB_NOT_FOUND
 } from 'constants/action-types';
 
 function requestJob(id) {
@@ -9,6 +12,32 @@ function requestJob(id) {
         type: REQUEST_JOB,
         payload: {
             id
+        }
+    };
+}
+
+function newJob(data) {
+    return {
+        type: NEW_JOB,
+        payload: data
+    };
+}
+
+function notFound() {
+    return {
+        type: JOB_NOT_FOUND,
+        payload: {
+            redirect: '/'
+        }
+    };
+}
+
+function receiveNewJob(json) {
+    return {
+        type: RECEIVE_NEW_JOB,
+        payload: {
+            ...json.job,
+            isComplete: true
         }
     };
 }
@@ -23,12 +52,29 @@ function receiveJob(json) {
     };
 }
 
+function checkStatus(res) {
+    if (res.status >= 200 && res.status < 300) {
+        return res;
+    }
+
+    const error = new Error(res.statusText);
+    error.res = res;
+    throw error;
+}
+
+
 function fetchJob(id) {
     return dispatch => {
         dispatch(requestJob(id));
         return fetch(`/api/jobs/${id}`)
-            .then(req => req.json())
-            .then(json => dispatch(receiveJob(json)));
+            .then(checkStatus)
+            .then(res => res.json())
+            .then(json => dispatch(receiveJob(json)))
+            .catch((error) => {
+                if (error.res.status >= 400) {
+                    dispatch(notFound());
+                }
+            });
     };
 }
 
@@ -43,5 +89,21 @@ export function getJob(id) {
         if (shouldFetchJob(getState(), id)) {
             return dispatch(fetchJob(id));
         }
+    };
+}
+
+export function createJob(data) {
+    return (dispatch) => {
+        dispatch(newJob(data));
+        return fetch('/api/jobs/', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(req => req.json())
+        .then(json => dispatch(receiveNewJob(json)));
     };
 }

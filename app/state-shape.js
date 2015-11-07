@@ -19,10 +19,22 @@
             companyLogo: "logo.png",
             address: "address",
             type: "full-time",
-            created: 12344567890,
+            createdAt: 12344567890,
             isComplete: false|true,
             isEditable: true|false,
             isFetching: true|false
         }
     },
+    preview: {
+        title: "Job title",
+        url: "",
+        description: "Lorem ...",
+        companyName: "company",
+        companyWebsite: "http://",
+        companyLogo: "logo.png",
+        address: "address",
+        type: "full-time",
+        createdAt: 12344567890,
+        isPreview: false|true,
+    }
 }

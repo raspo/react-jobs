@@ -84,4 +84,4 @@ function homeSelector(state) {
     };
 }
 
-export default connect(homeSelector)(Home)
+export default connect(homeSelector)(Home);

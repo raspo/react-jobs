@@ -1,50 +1,94 @@
-const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
 
-// GET /api
-router.get('/', (req, res) => {
-    res.json({ message: 'hooray! welcome to our api!' });
+const JobModel = require('../models/job.js');
+
+router.use((req, res, next) => {
+    // TODO add logging
+    // TODO check for expiration dates
+    next();
 });
 
-function getJobFixtures() {
-    const jobs = [];
-    var id;
-
-    for (id = 0; id < 27; id++) {
-        jobs.push({
-            id: id + '',
-            title: `Job Title #${id}`,
-            companyName: 'That Company Inc.',
-            companyWebsite: 'http://google.com',
-            address: 'London, UK',
-            companyLogo: '',
-            created: Date.now() - (id * 10 * 24 * 60 * 60 * 1000)
-        });
-    }
-
-    return jobs;
-}
+// GET /api
+router.get('/', (req, res) => {
+    res.json({ message: 'API v1.0' });
+});
 
 // GET /api/jobs
 router.get('/jobs', (req, res) => {
-    const jobs = getJobFixtures();
-    res.json({ jobs });
+    JobModel.find({
+        publishedAt: { $ne: null }
+    }, (err, jobs) => {
+        if (err) { res.send(err); }
+
+        const transformedJobs = jobs.map((job) => {
+            return job.toObject({transform: true, virtuals: true});
+        });
+
+        res.json({ jobs: transformedJobs });
+    });
+});
+
+// POST /api/jobs
+router.post('/jobs', (req, res) => {
+    const job = new JobModel(req.body);
+
+    job.save((err) => {
+        if (err) { res.send(err); }
+
+        res.json({
+            job: job.toObject({
+                transform: true,
+                virtuals: true
+            })
+        });
+    });
 });
 
 // GET /api/jobs/:job_id
 router.get('/jobs/:job_id', (req, res) => {
-    const jobs = getJobFixtures();
-    const job = _.find(jobs, 'id', req.params.job_id);
+    JobModel.findOne({_id: req.params.job_id}, (err, job) => {
+        if (err) { res.send(err); }
 
-    if (job) {
-        job.type = 'full-time';
-        job.description = '<h3>About you</h3><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis possimus, assumenda quibusdam aperiam quo modi perspiciatis, voluptatibus nemo atque similique itaque deleniti harum quaerat, reprehenderit magni reiciendis ratione tempore suscipit.</p><ul><li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li><li>Blanditiis possimus, assumenda quibusdam aperiam quo modi perspiciatis, voluptatibus nemo atque similique itaque deleniti harum quaerat, reprehenderit magni reiciendis ratione tempore suscipit.</li><li>Lorem voluptatibus nemo atque similique itaque deleniti harum quaerat.</li></ul><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis possimus, assumenda quibusdam aperiam quo modi perspiciatis, voluptatibus nemo atque similique itaque deleniti harum quaerat, reprehenderit magni reiciendis ratione tempore suscipit.</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis possimus, assumenda quibusdam aperiam quo modi perspiciatis, voluptatibus nemo atque similique itaque deleniti harum quaerat, reprehenderit magni reiciendis ratione tempore suscipit.</p><h3>The job</h3><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis possimus, assumenda quibusdam aperiam quo modi perspiciatis, voluptatibus nemo atque similique itaque deleniti harum quaerat, reprehenderit magni reiciendis ratione tempore suscipit.</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis possimus, assumenda quibusdam aperiam quo modi perspiciatis, voluptatibus nemo atque similique itaque deleniti harum quaerat, reprehenderit magni reiciendis ratione tempore suscipit.</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis possimus, assumenda quibusdam aperiam quo modi perspiciatis, voluptatibus nemo atque similique itaque deleniti harum quaerat, reprehenderit magni reiciendis ratione tempore suscipit.</p>';
-
-        res.json({ job });
-    } else {
-        res.sendStatus(404);
-    }
+        if (job) {
+            res.json({
+                job: job.toObject({
+                    transform: true,
+                    virtuals: true
+                })
+            });
+        } else {
+            res.sendStatus(404);
+        }
+    });
 });
+
+// POST /api/jobs/:job_id/publish
+router.post('/jobs/:job_id/publish', (req, res) => {
+    JobModel.findOne({_id: req.params.job_id}, (err, job) => {
+        if (err) { res.send(err); }
+
+        if (job) {
+            const now = Date.now();
+            const expirationDate = now + (30 * 24 * 60 * 60 * 1000);
+
+            job.publishedAt = new Date(now);
+            job.expiringAt = new Date(expirationDate);
+            job.save((error) => {
+                if (error) { res.send(error); }
+
+                res.json({
+                    job: job.toObject({
+                        transform: true,
+                        virtuals: true
+                    })
+                });
+            });
+        } else {
+            res.sendStatus(404);
+        }
+    });
+});
+
 
 module.exports = router;

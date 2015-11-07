@@ -5,6 +5,7 @@ import AppLayout from 'containers/app-layout';
 import Home from 'containers/home';
 import Create from 'containers/create';
 import Job from 'containers/job';
+import Preview from 'containers/preview';
 import NotFound from 'containers/not-found';
 
 function requireAuth(nextState, replaceState) {
@@ -19,8 +20,9 @@ export default (
     <Route path="/" component={AppLayout}>
         <IndexRoute component={Home} />
         <Route path="jobs/create" component={Create} />
-        <Route path="jobs/:id" component={Job} />
-        <Route path="jobs/edit" component={Job} onEnter={requireAuth} />
+        <Route path="jobs/:slug" component={Job} />
+        <Route path="jobs/:slug/edit" component={Job} onEnter={requireAuth} />
+        <Route path="jobs/:slug/preview" component={Preview} />
         <Route path="logout" onEnter={logout} />
         <Route path="*" component={NotFound} />
     </Route>

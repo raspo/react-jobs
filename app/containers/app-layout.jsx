@@ -1,11 +1,21 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
+import { redirect } from 'actions/app';
 import Header from 'components/header';
 
 class AppLayout extends Component {
     static propTypes = {
+        app: PropTypes.object.isRequired,
+        dispatch: PropTypes.func.isRequired,
         children: PropTypes.node.isRequired
+    }
+
+    componentWillReceiveProps(newProps) {
+        const { dispatch } = this.props;
+        if (newProps.app.redirect) {
+            dispatch(redirect(newProps.app.redirect));
+        }
     }
 
     render() {
@@ -21,9 +31,8 @@ class AppLayout extends Component {
 }
 
 function layoutSelector(state) {
-    return {
-        routerState: state.router
-    };
+    const { app } = state;
+    return { app };
 }
 
-export default connect(layoutSelector)(AppLayout)
+export default connect(layoutSelector)(AppLayout);

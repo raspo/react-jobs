@@ -15,6 +15,7 @@ const months = [
 
 export function simpleDate(datestring) {
     const date = new Date(datestring);
+    if (!date || !date.getTime()) { return '--'; }
     return months[date.getUTCMonth()] + ' ' + date.getUTCDate();
 }
 

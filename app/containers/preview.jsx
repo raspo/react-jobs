@@ -1,12 +1,12 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
-import { pushState } from 'redux-router';
 import { getJob } from 'actions/job';
 import JobView from 'components/job-view';
 
-class Job extends Component {
+class Preview extends Component {
     static propTypes = {
+        job: PropTypes.object,
         routeParams: PropTypes.object.isRequired,
         dispatch: PropTypes.func.isRequired
     }
@@ -15,13 +15,6 @@ class Job extends Component {
         const { dispatch, routeParams } = this.props;
         const id = routeParams.slug.replace(/-(.*)/gi, '');
         dispatch(getJob(id));
-    }
-
-    componentWillReceiveProps(newProps) {
-        const { dispatch } = this.props;
-        if (!newProps.isFetching && !newProps.publishedAt) {
-            dispatch(pushState(null, '/'));
-        }
     }
 
     render() {
@@ -34,4 +27,4 @@ function jobSelector(state) {
     return { ...job };
 }
 
-export default connect(jobSelector)(Job);
+export default connect(jobSelector)(Preview);
