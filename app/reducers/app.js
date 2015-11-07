@@ -8,7 +8,7 @@ export function app(state = {}, action) {
 
     switch (type) {
         case JOB_NOT_FOUND:
-            return { ...payload };
+            return payload;
         case REDIRECT_COMPLETE:
             return {};
         default:

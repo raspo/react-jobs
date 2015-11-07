@@ -52,17 +52,29 @@ function receiveJob(json) {
     };
 }
 
+function checkStatus(res) {
+    if (res.status >= 200 && res.status < 300) {
+        return res;
+    }
+
+    const error = new Error(res.statusText);
+    error.res = res;
+    throw error;
+}
+
+
 function fetchJob(id) {
     return dispatch => {
         dispatch(requestJob(id));
         return fetch(`/api/jobs/${id}`)
-            .then(res => {
-                if (res.status >= 400) {
+            .then(checkStatus)
+            .then(res => res.json())
+            .then(json => dispatch(receiveJob(json)))
+            .catch((error) => {
+                if (error.res.status >= 400) {
                     dispatch(notFound());
                 }
-                return res.json();
-            })
-            .then(json => dispatch(receiveJob(json)));
+            });
     };
 }
 

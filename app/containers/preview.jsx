@@ -1,13 +1,13 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
-import { pushState } from 'redux-router';
+import { getJob } from 'actions/job';
 import JobView from 'components/job-view';
 
 class Preview extends Component {
     static propTypes = {
         job: PropTypes.object,
-        isPublished: PropTypes.bool.isRequired,
+        routeParams: PropTypes.object.isRequired,
         dispatch: PropTypes.func.isRequired
     }
 
@@ -17,27 +17,14 @@ class Preview extends Component {
         dispatch(getJob(id));
     }
 
-    // componentDidMount() {
-    //     const { job, dispatch } = this.props;
-    //     if (job === null) {
-    //         dispatch(pushState(null, '/'));
-    //     }
-    // }
-
-    // componentWillUnMount() {
-    //     const { dispatch } = this.props;
-    //     dispatch(unsetPreview());
-    // }
-
     render() {
-        const { job } = this.props;
-        return job ? <JobView {...job} /> : null;
+        return <JobView {...this.props} />;
     }
 }
 
 function jobSelector(state) {
     const { job } = state;
-    return { job };
+    return { ...job };
 }
 
 export default connect(jobSelector)(Preview);

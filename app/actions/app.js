@@ -1,10 +1,17 @@
+import { pushState } from 'redux-router';
 import {
     REDIRECT_COMPLETE
 } from 'constants/action-types';
 
-export function redirect(payload) {
+function redirected() {
     return {
-        type: REDIRECT_COMPLETE,
-        payload
+        type: REDIRECT_COMPLETE
+    };
+}
+
+export function redirect(url) {
+    return (dispatch) => {
+        dispatch(redirected());
+        return dispatch(pushState(null, url));
     };
 }
