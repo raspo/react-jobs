@@ -15,8 +15,19 @@ class Create extends Component {
     }
 
     render() {
-        return <JobEdit onSubmit={this.handleSubmit.bind(this)} isNew />;
+        const props = {
+            ...this.props,
+            isNew: true,
+            onSubmit: this.handleSubmit.bind(this)
+        };
+
+        return <JobEdit {...props} />;
     }
 }
 
-export default connect()(Create);
+function jobSelector(state) {
+    const { job } = state;
+    return { ...job };
+}
+
+export default connect(jobSelector)(Create);

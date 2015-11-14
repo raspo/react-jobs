@@ -50,13 +50,10 @@ router.post('/jobs', (req, res) => {
 
     job.save((err) => {
         const errors = err ? err.errors : null;
+        const jobData = job.toObject({transform: true, virtuals: true});
 
         res.json({
-            job: job.toObject({
-                transform: true,
-                virtuals: true
-            }),
-            errors: errors
+            job: _.assign({}, jobData, {errors: errors})
         });
     });
 });
@@ -91,13 +88,10 @@ router.post('/jobs/:job_id', (req, res) => {
 
             job.save((err) => {
                 const errors = err ? err.errors : null;
+                const jobData = job.toObject({transform: true, virtuals: true});
 
                 res.json({
-                    job: job.toObject({
-                        transform: true,
-                        virtuals: true
-                    }),
-                    errors: errors
+                    job: _.assign({}, jobData, {errors: errors})
                 });
             });
         } else {

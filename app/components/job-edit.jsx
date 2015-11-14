@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 
 class JobView extends Component {
     static propTypes = {
+        id: PropTypes.string,
         title: PropTypes.string,
         description: PropTypes.string,
         address: PropTypes.string,
@@ -12,6 +13,7 @@ class JobView extends Component {
         companyName: PropTypes.string,
         companyWebsite: PropTypes.string,
         companyTwitter: PropTypes.string,
+        errors: PropTypes.object,
         isNew: PropTypes.bool,
         onSubmit: PropTypes.func.isRequired
     }
@@ -36,11 +38,18 @@ class JobView extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const data = this.getFormData();
-        this.props.onSubmit(data);
+        this.props.onSubmit({
+            ...data,
+            id: this.props.id
+        });
     }
 
     render() {
-        const {title, description, address, type, url, companyName, companyWebsite, companyTwitter} = this.props;
+        const {title, description, address, type, url, companyName, companyWebsite, companyTwitter, errors} = this.props;
+
+        if (errors) {
+            console.log('DUDE!!!!', errors);
+        }
 
         return (
             <div className="page">
