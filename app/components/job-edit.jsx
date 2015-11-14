@@ -6,13 +6,12 @@ class JobView extends Component {
     static propTypes = {
         title: PropTypes.string,
         description: PropTypes.string,
-        companyName: PropTypes.string,
-        companyWebsite: PropTypes.string,
         address: PropTypes.string,
         type: PropTypes.string,
-        createdAt: PropTypes.string,
-        logo: PropTypes.string,
-        isPreview: PropTypes.bool,
+        url: PropTypes.string,
+        companyName: PropTypes.string,
+        companyWebsite: PropTypes.string,
+        companyTwitter: PropTypes.string,
         isNew: PropTypes.bool,
         onSubmit: PropTypes.func.isRequired
     }
@@ -24,9 +23,9 @@ class JobView extends Component {
     getFormData() {
         return {
             title: this.refs.title.value.trim(),
-            type: this.refs.type.value.trim(),
-            address: this.refs.address.value.trim(),
             description: this.refs.description.value.trim(),
+            address: this.refs.address.value.trim(),
+            type: this.refs.type.value.trim(),
             url: this.refs.url.value.trim(),
             companyName: this.refs.companyName.value.trim(),
             companyWebsite: this.refs.companyWebsite.value.trim(),
@@ -41,6 +40,8 @@ class JobView extends Component {
     }
 
     render() {
+        const {title, description, address, type, url, companyName, companyWebsite, companyTwitter} = this.props;
+
         return (
             <div className="page">
                 <header className="page-header">
@@ -53,13 +54,13 @@ class JobView extends Component {
                                 <label htmlFor="field-job-title">
                                     <span>Job title</span>
                                     <div>
-                                        <input type="text" id="field-job-title" ref="title"/>
+                                        <input type="text" id="field-job-title" ref="title" defaultValue={title} />
                                     </div>
                                 </label>
                                 <label htmlFor="field-job-type">
                                     <span>Job type</span>
                                     <div>
-                                        <select id="field-job-type" ref="type">
+                                        <select id="field-job-type" ref="type" defaultValue={type}>
                                             <option value="fulltime">Full Time</option>
                                             <option value="contract">Contract</option>
                                             <option value="freelance">Freelance</option>
@@ -69,20 +70,20 @@ class JobView extends Component {
                                 <label htmlFor="field-job-address">
                                     <span>Job location</span>
                                     <div>
-                                        <input type="text" id="field-job-address" ref="address"/>
+                                        <input type="text" id="field-job-address" ref="address" defaultValue={address}/>
                                     </div>
                                 </label>
                                 <label htmlFor="field-job-description">
                                     <span>Description</span>
                                     <div>
-                                        <textarea id="field-job-description" cols="30" rows="10" ref="description"/>
+                                        <textarea id="field-job-description" cols="30" rows="10" ref="description" defaultValue={description}/>
                                         <p className="instructions">Basic HTML and Markdown allowed</p>
                                     </div>
                                 </label>
                                 <label htmlFor="field-job-url">
                                     <span>Application URL</span>
                                     <div>
-                                        <input type="text" id="field-job-url" defaultValue="http://" ref="url"/>
+                                        <input type="text" id="field-job-url" defaultValue="http://" ref="url" defaultValue={url}/>
                                     </div>
                                 </label>
                             </fieldset>
@@ -91,19 +92,19 @@ class JobView extends Component {
                                 <label htmlFor="field-company-name">
                                     <span>Company name</span>
                                     <div>
-                                        <input type="text" id="field-company-name" ref="companyName"/>
+                                        <input type="text" id="field-company-name" ref="companyName" defaultValue={companyName}/>
                                     </div>
                                 </label>
                                 <label htmlFor="field-company-website">
                                     <span>Company website</span>
                                     <div>
-                                        <input type="text" id="field-company-website" defaultValue="http://" ref="companyWebsite"/>
+                                        <input type="text" id="field-company-website" defaultValue="http://" ref="companyWebsite" defaultValue={companyWebsite}/>
                                     </div>
                                 </label>
                                 <label htmlFor="field-company-twitter">
                                     <span>Twitter handle</span>
                                     <div>
-                                        <input type="text" id="field-company-twitter" ref="companyTwitter"/>
+                                        <input type="text" id="field-company-twitter" ref="companyTwitter" defaultValue={companyTwitter}/>
                                         <p className="instructions">Used to display the company logo</p>
                                     </div>
                                 </label>

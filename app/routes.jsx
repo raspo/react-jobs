@@ -5,6 +5,7 @@ import AppLayout from 'containers/app-layout';
 import Home from 'containers/home';
 import Create from 'containers/create';
 import Job from 'containers/job';
+import Edit from 'containers/edit';
 import Preview from 'containers/preview';
 import NotFound from 'containers/not-found';
 
@@ -21,7 +22,7 @@ export default (
         <IndexRoute component={Home} />
         <Route path="jobs/new" component={Create} />
         <Route path="jobs/:slug" component={Job} />
-        <Route path="jobs/:slug/edit" component={Job} onEnter={requireAuth} />
+        <Route path="jobs/:slug/edit" component={Edit} onEnter={requireAuth} />
         <Route path="jobs/:slug/preview" component={Preview} />
         <Route path="logout" onEnter={logout} />
         <Route path="*" component={NotFound} />

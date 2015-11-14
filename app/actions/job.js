@@ -23,6 +23,13 @@ function newJob(data) {
     };
 }
 
+function editJob(data) {
+    return {
+        type: NEW_JOB,
+        payload: data
+    };
+}
+
 function notFound() {
     return {
         type: JOB_NOT_FOUND,
@@ -105,5 +112,26 @@ export function createJob(data) {
         })
         .then(req => req.json())
         .then(json => dispatch(receiveNewJob(json)));
+    };
+}
+
+export function updateJob(data) {
+    return (dispatch) => {
+        dispatch(editJob(data));
+        return fetch(`/api/jobs/${data.id}`, {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(req => req.json())
+        .then(json => dispatch(receiveJob(json)))
+        .catch((error) => {
+            if (error.res.status >= 400) {
+                dispatch(notFound());
+            }
+        });
     };
 }

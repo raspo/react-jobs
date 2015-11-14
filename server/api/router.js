@@ -1,7 +1,22 @@
+const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
 
 const JobModel = require('../models/job.js');
+
+function parseJobPayload(payload) {
+    return _.pick(payload, [
+        'title',
+        'type',
+        'address',
+        'description',
+        'url',
+        'companyName',
+        'companyWebsite',
+        'companyEmail',
+        'companyTwitter'
+    ]);
+}
 
 router.use((req, res, next) => {
     // TODO add logging
@@ -31,16 +46,17 @@ router.get('/jobs', (req, res) => {
 
 // POST /api/jobs
 router.post('/jobs', (req, res) => {
-    const job = new JobModel(req.body);
+    const job = new JobModel(parseJobPayload(req.body));
 
     job.save((err) => {
-        if (err) { res.send(err); }
+        const errors = err ? err.errors : null;
 
         res.json({
             job: job.toObject({
                 transform: true,
                 virtuals: true
-            })
+            }),
+            errors: errors
         });
     });
 });
@@ -63,6 +79,34 @@ router.get('/jobs/:job_id', (req, res) => {
     });
 });
 
+// POST /api/jobs/:job_id
+router.post('/jobs/:job_id', (req, res) => {
+    JobModel.findOne({_id: req.params.job_id}, (findErr, job) => {
+        if (findErr) { res.send(findErr); }
+
+        if (job) {
+            const payload = parseJobPayload(req.body);
+
+            _.assign(job, payload);
+
+            job.save((err) => {
+                const errors = err ? err.errors : null;
+
+                res.json({
+                    job: job.toObject({
+                        transform: true,
+                        virtuals: true
+                    }),
+                    errors: errors
+                });
+            });
+        } else {
+            res.sendStatus(404);
+        }
+    });
+});
+
+// TEMP
 // POST /api/jobs/:job_id/publish
 router.post('/jobs/:job_id/publish', (req, res) => {
     JobModel.findOne({_id: req.params.job_id}, (err, job) => {
