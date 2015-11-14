@@ -36,7 +36,7 @@ class Home extends Component {
                         <Filter value={filter} onChange={this.handleChange.bind(this)} />
                     </main>
                     <aside className="sidebar">
-                        <Link className="button button-fluid" to="/jobs/create">Post new job</Link>
+                        <Link className="button button-fluid" to="/jobs/new">Post new job</Link>
                     </aside>
                 </header>
                 <section className="page-content">

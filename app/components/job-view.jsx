@@ -52,7 +52,7 @@ class JobView extends Component {
                         </header>
                         <article dangerouslySetInnerHTML={this.renderContent()}></article>
                         <footer className="job-apply">
-                            <Link className="button" to="/jobs/create">Apply now</Link>
+                            <Link className="button" to="/jobs/new">Apply now</Link>
                         </footer>
                     </main>
                     <aside className="sidebar">

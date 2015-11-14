@@ -19,7 +19,7 @@ function logout(nextState, replaceState) {
 export default (
     <Route path="/" component={AppLayout}>
         <IndexRoute component={Home} />
-        <Route path="jobs/create" component={Create} />
+        <Route path="jobs/new" component={Create} />
         <Route path="jobs/:slug" component={Job} />
         <Route path="jobs/:slug/edit" component={Job} onEnter={requireAuth} />
         <Route path="jobs/:slug/preview" component={Preview} />
