@@ -24,9 +24,14 @@ function receiveJobs(json) {
 function fetchJobs() {
     return dispatch => {
         dispatch(requestJobs());
-        return fetch('/api/jobs')
-            .then(req => req.json())
-            .then(json => dispatch(receiveJobs(json)));
+        return fetch('/api/jobs', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(req => req.json())
+        .then(json => dispatch(receiveJobs(json)));
     };
 }
 

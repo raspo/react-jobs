@@ -1,8 +1,7 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
-import { pushState } from 'redux-router';
-import { newJobForm, createJob } from 'actions/job';
+import { prepareNewJob, createNewJob } from 'actions/job';
 import JobEdit from 'components/job-edit';
 
 class Create extends Component {
@@ -13,21 +12,12 @@ class Create extends Component {
 
     componentDidMount() {
         const { dispatch } = this.props;
-        dispatch(newJobForm());
-    }
-
-    componentWillReceiveProps(newProps) {
-        const { dispatch } = this.props;
-        const { job } = newProps;
-
-        if (job && job.slug && !job.errors) {
-            dispatch(pushState(null, `/jobs/${job.slug}/preview`));
-        }
+        dispatch(prepareNewJob());
     }
 
     handleSubmit(data) {
         const { dispatch } = this.props;
-        dispatch(createJob(data));
+        dispatch(createNewJob(data));
     }
 
     render() {
@@ -44,7 +34,9 @@ class Create extends Component {
 function newJobSelector(state) {
     const { job } = state;
     return {
-        job: { ...job }
+        job: {
+            errors: job.errors
+        }
     };
 }
 

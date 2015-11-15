@@ -41,8 +41,8 @@
         address: "address",
         type: "full-time",
         createdAt: 12344567890,
-        isComplete: false|true,
         isEditable: true|false,
+        isProcessing: true|false,
         isFetching: true|false
         isPreview: false|true
     }

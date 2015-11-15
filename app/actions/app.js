@@ -1,4 +1,4 @@
-import { replaceState } from 'redux-router';
+import { pushState } from 'redux-router';
 import {
     REDIRECT_COMPLETE
 } from 'constants/action-types';
@@ -11,7 +11,7 @@ function redirected() {
 
 export function redirect(url) {
     return (dispatch) => {
-        dispatch(redirected());
-        return dispatch(replaceState(null, url));
+        dispatch(pushState(null, url));
+        return dispatch(redirected());
     };
 }

@@ -13,8 +13,9 @@ class AppLayout extends Component {
 
     componentWillReceiveProps(newProps) {
         const { dispatch } = this.props;
-        if (newProps.app.redirect) {
-            dispatch(redirect(newProps.app.redirect));
+        const { app } = newProps;
+        if (app.redirect) {
+            dispatch(redirect(app.redirect));
         }
     }
 

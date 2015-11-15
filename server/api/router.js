@@ -76,8 +76,8 @@ router.get('/jobs/:job_id', (req, res) => {
     });
 });
 
-// POST /api/jobs/:job_id
-router.post('/jobs/:job_id', (req, res) => {
+// PUT /api/jobs/:job_id
+router.put('/jobs/:job_id', (req, res) => {
     JobModel.findOne({_id: req.params.job_id}, (findErr, job) => {
         if (findErr) { res.send(findErr); }
 

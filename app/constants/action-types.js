@@ -4,10 +4,12 @@ export const REQUEST_JOBS = 'REQUEST_JOBS';
 export const RECEIVE_JOBS = 'RECEIVE_JOBS';
 export const FILTER_JOBS = 'FILTER_JOBS';
 
+export const CREATING_NEW_JOB = 'CREATING_NEW_JOB';
+export const EDITING_JOB = 'EDITING_JOB';
 export const REQUEST_JOB = 'REQUEST_JOB';
 export const RECEIVE_JOB = 'RECEIVE_JOB';
-export const NEW_JOB = 'NEW_JOB';
-export const NEW_JOB_FORM = 'NEW_JOB_FORM';
+export const UPDATED_JOB = 'UPDATED_JOB';
+export const PREPARE_NEW_JOB = 'PREPARE_NEW_JOB';
 export const RECEIVE_NEW_JOB = 'RECEIVE_NEW_JOB';
 export const JOB_NOT_FOUND = 'JOB_NOT_FOUND';
 

@@ -3,8 +3,10 @@ import {
     REQUEST_JOBS,
     RECEIVE_JOBS,
     FILTER_JOBS,
+    CREATING_NEW_JOB,
+    EDITING_JOB,
     REQUEST_JOB,
-    NEW_JOB_FORM,
+    PREPARE_NEW_JOB,
     RECEIVE_JOB,
     RECEIVE_NEW_JOB
 } from 'constants/action-types';
@@ -72,22 +74,23 @@ export function jobsById(state = {}, action) {
     }
 }
 
-export function job(state = {
-    isComplete: false,
-    isFetching: false
-}, action) {
+export function job(state = {isFetching: false}, action) {
     const { type, payload } = action;
 
     switch (type) {
-        case NEW_JOB_FORM:
+        case PREPARE_NEW_JOB:
             return {
-                isComplete: false,
                 isFetching: false
             };
         case REQUEST_JOB:
             return {
-                isComplete: false,
                 isFetching: true
+            };
+        case CREATING_NEW_JOB:
+        case EDITING_JOB:
+            return {
+                ...state,
+                isProcessing: true
             };
         case RECEIVE_JOB:
         case RECEIVE_NEW_JOB:

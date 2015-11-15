@@ -2,8 +2,10 @@ import fetch from 'isomorphic-fetch';
 import {
     REQUEST_JOB,
     RECEIVE_JOB,
-    NEW_JOB,
-    NEW_JOB_FORM,
+    CREATING_NEW_JOB,
+    EDITING_JOB,
+    UPDATED_JOB,
+    PREPARE_NEW_JOB,
     RECEIVE_NEW_JOB,
     JOB_NOT_FOUND
 } from 'constants/action-types';
@@ -17,17 +19,15 @@ function requestJob(id) {
     };
 }
 
-function newJob(data) {
+function creatingNewJob() {
     return {
-        type: NEW_JOB,
-        payload: data
+        type: CREATING_NEW_JOB
     };
 }
 
-function editJob(data) {
+function editingJob() {
     return {
-        type: NEW_JOB,
-        payload: data
+        type: EDITING_JOB
     };
 }
 
@@ -37,6 +37,12 @@ function notFound() {
         payload: {
             redirect: '/'
         }
+    };
+}
+
+export function prepareNewJob() {
+    return {
+        type: PREPARE_NEW_JOB
     };
 }
 
@@ -60,6 +66,15 @@ function receiveJob(data) {
     };
 }
 
+function updatedJob(data) {
+    return {
+        type: UPDATED_JOB,
+        payload: {
+            redirect: `/jobs/${data.slug}/preview`
+        }
+    };
+}
+
 function checkStatus(res) {
     if (res.status >= 200 && res.status < 300) {
         return res;
@@ -70,19 +85,23 @@ function checkStatus(res) {
     throw error;
 }
 
-
 function fetchJob(id) {
     return dispatch => {
         dispatch(requestJob(id));
-        return fetch(`/api/jobs/${id}`)
-            .then(checkStatus)
-            .then(res => res.json())
-            .then(json => dispatch(receiveJob(json.job)))
-            .catch((error) => {
-                if (error.res.status >= 400) {
-                    dispatch(notFound());
-                }
-            });
+        return fetch(`/api/jobs/${id}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(checkStatus)
+        .then(res => res.json())
+        .then(json => dispatch(receiveJob(json.job)))
+        .catch((error) => {
+            if (error.res.status >= 400) {
+                dispatch(notFound());
+            }
+        });
     };
 }
 
@@ -100,12 +119,6 @@ function loadJobData(state, id) {
     return null;
 }
 
-export function newJobForm() {
-    return {
-        type: NEW_JOB_FORM
-    };
-}
-
 export function getJob(id) {
     return (dispatch, getState) => {
         const state = getState();
@@ -120,9 +133,9 @@ export function getJob(id) {
     };
 }
 
-export function createJob(data) {
+export function createNewJob(data) {
     return (dispatch) => {
-        dispatch(newJob(data));
+        dispatch(creatingNewJob());
         return fetch('/api/jobs/', {
             method: 'post',
             headers: {
@@ -132,15 +145,20 @@ export function createJob(data) {
             body: JSON.stringify(data)
         })
         .then(req => req.json())
-        .then(json => dispatch(receiveNewJob(json.job)));
+        .then((json) => {
+            if (!json.job.errors) {
+                dispatch(updatedJob(json.job));
+            }
+            dispatch(receiveNewJob(json.job));
+        });
     };
 }
 
 export function updateJob(data) {
     return (dispatch) => {
-        dispatch(editJob(data));
+        dispatch(editingJob());
         return fetch(`/api/jobs/${data.id}`, {
-            method: 'post',
+            method: 'put',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -148,7 +166,12 @@ export function updateJob(data) {
             body: JSON.stringify(data)
         })
         .then(req => req.json())
-        .then(json => dispatch(receiveJob(json)))
+        .then((json) => {
+            if (!json.job.errors) {
+                dispatch(updatedJob(json.job));
+            }
+            dispatch(receiveJob(json.job));
+        })
         .catch((error) => {
             if (error.res.status >= 400) {
                 dispatch(notFound());
