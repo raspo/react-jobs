@@ -64,7 +64,7 @@ export function jobsById(state = {}, action) {
             return nextState;
         case RECEIVE_JOBS:
             return _.reduce(payload.entities, (result, entity) => {
-                result[entity.id] = { ...entity };
+                result[entity.id] = _.assign({}, state[entity.id], entity);
                 return result;
             }, {});
         default:
@@ -92,7 +92,6 @@ export function job(state = {
         case RECEIVE_JOB:
         case RECEIVE_NEW_JOB:
             return {
-                ...state,
                 ...payload,
                 isFetching: false
             };

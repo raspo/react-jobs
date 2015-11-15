@@ -13,6 +13,8 @@ class Edit extends Component {
     }
 
     componentDidMount() {
+        // TODO check if you have job already
+        // if non authorized, redirect to /
         const { dispatch, routeParams } = this.props;
         const id = routeParams.slug.replace(/-(.*)/gi, '');
         dispatch(getJob(id));

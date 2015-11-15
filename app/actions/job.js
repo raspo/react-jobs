@@ -40,21 +40,21 @@ function notFound() {
     };
 }
 
-function receiveNewJob(json) {
+function receiveNewJob(data) {
     return {
         type: RECEIVE_NEW_JOB,
         payload: {
-            ...json.job,
+            ...data,
             isComplete: true
         }
     };
 }
 
-function receiveJob(json) {
+function receiveJob(data) {
     return {
         type: RECEIVE_JOB,
         payload: {
-            ...json.job,
+            ...data,
             isComplete: true
         }
     };
@@ -77,7 +77,7 @@ function fetchJob(id) {
         return fetch(`/api/jobs/${id}`)
             .then(checkStatus)
             .then(res => res.json())
-            .then(json => dispatch(receiveJob(json)))
+            .then(json => dispatch(receiveJob(json.job)))
             .catch((error) => {
                 if (error.res.status >= 400) {
                     dispatch(notFound());
@@ -92,6 +92,14 @@ function shouldFetchJob(state, id) {
     return true;
 }
 
+function loadJobData(state, id) {
+    const { jobsById } = state;
+    if (jobsById[id] && jobsById[id].isComplete) {
+        return jobsById[id];
+    }
+    return null;
+}
+
 export function newJobForm() {
     return {
         type: NEW_JOB_FORM
@@ -100,8 +108,14 @@ export function newJobForm() {
 
 export function getJob(id) {
     return (dispatch, getState) => {
-        if (shouldFetchJob(getState(), id)) {
+        const state = getState();
+        if (shouldFetchJob(state, id)) {
             return dispatch(fetchJob(id));
+        }
+
+        const jobData = loadJobData(state, id);
+        if (jobData) {
+            return dispatch(receiveJob(jobData));
         }
     };
 }
@@ -118,7 +132,7 @@ export function createJob(data) {
             body: JSON.stringify(data)
         })
         .then(req => req.json())
-        .then(json => dispatch(receiveNewJob(json)));
+        .then(json => dispatch(receiveNewJob(json.job)));
     };
 }
 

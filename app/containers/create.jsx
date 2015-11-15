@@ -18,9 +18,10 @@ class Create extends Component {
 
     componentWillReceiveProps(newProps) {
         const { dispatch } = this.props;
+        const { job } = newProps;
 
-        if (newProps.job && newProps.job.slug && !newProps.job.errors) {
-            dispatch(pushState(null, `/jobs/${newProps.job.slug}/preview`));
+        if (job && job.slug && !job.errors) {
+            dispatch(pushState(null, `/jobs/${job.slug}/preview`));
         }
     }
 
@@ -43,10 +44,7 @@ class Create extends Component {
 function newJobSelector(state) {
     const { job } = state;
     return {
-        job: {
-            slug: job.slug,
-            errors: job.errors
-        }
+        job: { ...job }
     };
 }
 
