@@ -1,6 +1,7 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 import { Link } from 'react-router';
+import FormField from 'components/form-field';
 
 class JobView extends Component {
     static propTypes = {
@@ -12,6 +13,7 @@ class JobView extends Component {
         url: PropTypes.string,
         companyName: PropTypes.string,
         companyWebsite: PropTypes.string,
+        companyEmail: PropTypes.string,
         companyTwitter: PropTypes.string,
         errors: PropTypes.object,
         isNew: PropTypes.bool,
@@ -24,14 +26,15 @@ class JobView extends Component {
 
     getFormData() {
         return {
-            title: this.refs.title.value.trim(),
-            description: this.refs.description.value.trim(),
-            address: this.refs.address.value.trim(),
-            type: this.refs.type.value.trim(),
-            url: this.refs.url.value.trim(),
-            companyName: this.refs.companyName.value.trim(),
-            companyWebsite: this.refs.companyWebsite.value.trim(),
-            companyTwitter: this.refs.companyTwitter.value.trim()
+            title: this.refs.title.getValue(),
+            type: this.refs.type.getValue(),
+            description: this.refs.description.getValue(),
+            address: this.refs.address.getValue(),
+            url: this.refs.url.getValue(),
+            companyName: this.refs.companyName.getValue(),
+            companyWebsite: this.refs.companyWebsite.getValue(),
+            companyEmail: this.refs.companyEmail.getValue(),
+            companyTwitter: this.refs.companyTwitter.getValue()
         };
     }
 
@@ -45,11 +48,12 @@ class JobView extends Component {
     }
 
     render() {
-        const {title, description, address, type, url, companyName, companyWebsite, companyTwitter, errors} = this.props;
-
-        if (errors) {
-            console.log('DUDE!!!!', errors);
-        }
+        const {title, description, address, type, url, companyName, companyWebsite, companyEmail, companyTwitter, errors} = this.props;
+        const types = [
+            {value: 'fulltime', text: 'Full Time'},
+            {value: 'contract', text: 'Contract'},
+            {value: 'freelance', text: 'Freelance'}
+        ];
 
         return (
             <div className="page">
@@ -60,63 +64,36 @@ class JobView extends Component {
                     <main className="main">
                         <form onSubmit={this.handleSubmit.bind(this)}>
                             <fieldset>
-                                <label htmlFor="field-job-title">
-                                    <span>Job title</span>
-                                    <div>
-                                        <input type="text" id="field-job-title" ref="title" defaultValue={title} />
-                                    </div>
-                                </label>
-                                <label htmlFor="field-job-type">
-                                    <span>Job type</span>
-                                    <div>
-                                        <select id="field-job-type" ref="type" defaultValue={type}>
-                                            <option value="fulltime">Full Time</option>
-                                            <option value="contract">Contract</option>
-                                            <option value="freelance">Freelance</option>
-                                        </select>
-                                    </div>
-                                </label>
-                                <label htmlFor="field-job-address">
-                                    <span>Job location</span>
-                                    <div>
-                                        <input type="text" id="field-job-address" ref="address" defaultValue={address}/>
-                                    </div>
-                                </label>
-                                <label htmlFor="field-job-description">
-                                    <span>Description</span>
-                                    <div>
-                                        <textarea id="field-job-description" cols="30" rows="10" ref="description" defaultValue={description}/>
-                                        <p className="instructions">Basic HTML and Markdown allowed</p>
-                                    </div>
-                                </label>
-                                <label htmlFor="field-job-url">
-                                    <span>Application URL</span>
-                                    <div>
-                                        <input type="text" id="field-job-url" defaultValue="http://" ref="url" defaultValue={url}/>
-                                    </div>
-                                </label>
+                                <FormField name="title" label="Job title" defaultValue={title} errors={errors} ref="title" />
+                                <FormField name="type" type="select" options={types} label="Job type" defaultValue={type} errors={errors} ref="type" />
+                                <FormField name="address" label="Job location" defaultValue={address} errors={errors} ref="address" />
+                                <FormField
+                                    name="description"
+                                    type="textarea"
+                                    label="Description"
+                                    instructions="Basic HTML and Markdown allowed"
+                                    defaultValue={description}
+                                    errors={errors}
+                                    ref="description" />
+                                <FormField name="url" label="Application URL" defaultValue={url} errors={errors} ref="url" />
                             </fieldset>
                             <fieldset>
                                 <legend>About the company</legend>
-                                <label htmlFor="field-company-name">
-                                    <span>Company name</span>
-                                    <div>
-                                        <input type="text" id="field-company-name" ref="companyName" defaultValue={companyName}/>
-                                    </div>
-                                </label>
-                                <label htmlFor="field-company-website">
-                                    <span>Company website</span>
-                                    <div>
-                                        <input type="text" id="field-company-website" defaultValue="http://" ref="companyWebsite" defaultValue={companyWebsite}/>
-                                    </div>
-                                </label>
-                                <label htmlFor="field-company-twitter">
-                                    <span>Twitter handle</span>
-                                    <div>
-                                        <input type="text" id="field-company-twitter" ref="companyTwitter" defaultValue={companyTwitter}/>
-                                        <p className="instructions">Used to display the company logo</p>
-                                    </div>
-                                </label>
+                                <FormField name="companyName" label="Company name" defaultValue={companyName} errors={errors} ref="companyName" />
+                                <FormField name="companyWebsite" label="Company website" defaultValue={companyWebsite} errors={errors} ref="companyWebsite" />
+                                <FormField
+                                    name="companyEmail"
+                                    label="Email"
+                                    instructions="This is where we’ll send your confirmation email"
+                                    defaultValue={companyEmail}
+                                    errors={errors}
+                                    ref="companyEmail" />
+                                <FormField
+                                    name="companyTwitter"
+                                    label="Twitter handle"
+                                    instructions="Used to display the company logo"
+                                    defaultValue={companyTwitter} errors={errors}
+                                    ref="companyTwitter" />
                             </fieldset>
                             <fieldset>
                                 <button type="submit" className="button">Preview job listing</button>

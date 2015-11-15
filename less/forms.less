@@ -8,6 +8,7 @@ textarea {
     height: 34px;
     padding: 5px 10px;
     width: 100%;
+    transition: border-color 0.2 ease-in-out;
 
     &:focus {
         border-color: darken(@border-color, 10%);
@@ -103,6 +104,14 @@ form {
             font-size: 12px;
             line-height: 1.3em;
             padding-top: 7px;
+        }
+
+        &.is-invalid {
+            input,
+            textarea,
+            select {
+                border-color: #C12020;
+            }
         }
     }
 

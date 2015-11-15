@@ -40,9 +40,6 @@ function notFound() {
 }
 
 function receiveNewJob(json) {
-
-    console.log('receiveNewJob', json);
-
     return {
         type: RECEIVE_NEW_JOB,
         payload: {

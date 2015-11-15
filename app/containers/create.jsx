@@ -25,9 +25,11 @@ class Create extends Component {
     }
 }
 
-function jobSelector(state) {
+function newJobSelector(state) {
     const { job } = state;
-    return { ...job };
+    return {
+        errors: job.errors
+    };
 }
 
-export default connect(jobSelector)(Create);
+export default connect(newJobSelector)(Create);
