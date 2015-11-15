@@ -18,13 +18,20 @@ class Preview extends Component {
     }
 
     render() {
-        return <JobView {...this.props} />;
+        const props = {
+            ...this.props.job,
+            isPreview: true
+        };
+
+        return <JobView {...props} />;
     }
 }
 
 function jobSelector(state) {
     const { job } = state;
-    return { ...job };
+    return {
+        job
+    };
 }
 
 export default connect(jobSelector)(Preview);

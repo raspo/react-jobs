@@ -44,6 +44,5 @@
         isEditable: true|false,
         isProcessing: true|false,
         isFetching: true|false
-        isPreview: false|true
     }
 }

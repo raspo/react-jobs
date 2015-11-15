@@ -25,6 +25,28 @@ class JobView extends Component {
         };
     }
 
+    renderActions() {
+        const {slug, isPreview} = this.props;
+        const editUrl = `/jobs/${slug}/edit`;
+        const paymentUrl = `/jobs/${slug}/payment`;
+        const applicationUrl = `/jobs/${slug}/apply`;
+
+        if (isPreview) {
+            return (
+                <div className="page-actions">
+                    <Link className="button" to={editUrl}>Edit</Link>
+                    <Link className="button button-right" to={paymentUrl}>Proceed to payment</Link>
+                </div>
+            );
+        }
+
+        return (
+            <footer className="job-apply">
+                <Link className="button" to={applicationUrl}>Apply now</Link>
+            </footer>
+        );
+    }
+
     render() {
         if (this.props.isFetching) {
             return <Loading />;
@@ -51,9 +73,7 @@ class JobView extends Component {
                             </div>
                         </header>
                         <article dangerouslySetInnerHTML={this.renderContent()}></article>
-                        <footer className="job-apply">
-                            <Link className="button" to="/jobs/new">Apply now</Link>
-                        </footer>
+                        {this.renderActions()}
                     </main>
                     <aside className="sidebar">
                         <ul className="links">
