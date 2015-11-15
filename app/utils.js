@@ -13,10 +13,20 @@ const months = [
     'DEC'
 ];
 
+export const jobTypesMap = {
+    fulltime: 'Full Time',
+    contract: 'Contract',
+    freelance: 'Freelance'
+};
+
 export function simpleDate(datestring) {
     const date = new Date(datestring);
     if (!date || !date.getTime()) { return '--'; }
     return months[date.getUTCMonth()] + ' ' + date.getUTCDate();
+}
+
+export function prettyJobType(jobType) {
+    return jobTypesMap[jobType];
 }
 
 export function stringScore(string, target) {

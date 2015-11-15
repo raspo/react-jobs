@@ -7,6 +7,7 @@ export const FILTER_JOBS = 'FILTER_JOBS';
 export const REQUEST_JOB = 'REQUEST_JOB';
 export const RECEIVE_JOB = 'RECEIVE_JOB';
 export const NEW_JOB = 'NEW_JOB';
+export const NEW_JOB_FORM = 'NEW_JOB_FORM';
 export const RECEIVE_NEW_JOB = 'RECEIVE_NEW_JOB';
 export const JOB_NOT_FOUND = 'JOB_NOT_FOUND';
 

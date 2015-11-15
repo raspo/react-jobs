@@ -1,12 +1,27 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
-import { createJob } from 'actions/job';
+import { pushState } from 'redux-router';
+import { newJobForm, createJob } from 'actions/job';
 import JobEdit from 'components/job-edit';
 
 class Create extends Component {
     static propTypes = {
+        job: PropTypes.object,
         dispatch: PropTypes.func.isRequired
+    }
+
+    componentDidMount() {
+        const { dispatch } = this.props;
+        dispatch(newJobForm());
+    }
+
+    componentWillReceiveProps(newProps) {
+        const { dispatch } = this.props;
+
+        if (newProps.job && newProps.job.slug && !newProps.job.errors) {
+            dispatch(pushState(null, `/jobs/${newProps.job.slug}/preview`));
+        }
     }
 
     handleSubmit(data) {
@@ -16,7 +31,7 @@ class Create extends Component {
 
     render() {
         const props = {
-            ...this.props,
+            ...this.props.job,
             isNew: true,
             onSubmit: this.handleSubmit.bind(this)
         };
@@ -28,7 +43,10 @@ class Create extends Component {
 function newJobSelector(state) {
     const { job } = state;
     return {
-        errors: job.errors
+        job: {
+            slug: job.slug,
+            errors: job.errors
+        }
     };
 }
 

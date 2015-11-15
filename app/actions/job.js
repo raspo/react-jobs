@@ -3,6 +3,7 @@ import {
     REQUEST_JOB,
     RECEIVE_JOB,
     NEW_JOB,
+    NEW_JOB_FORM,
     RECEIVE_NEW_JOB,
     JOB_NOT_FOUND
 } from 'constants/action-types';
@@ -89,6 +90,12 @@ function shouldFetchJob(state, id) {
     const { jobsById } = state;
     if (jobsById[id] && (jobsById[id].isComplete || jobsById[id].isFetching)) { return false; }
     return true;
+}
+
+export function newJobForm() {
+    return {
+        type: NEW_JOB_FORM
+    };
 }
 
 export function getJob(id) {

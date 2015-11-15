@@ -1,7 +1,7 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 import { Link } from 'react-router';
-import { simpleDate } from 'utils';
+import { simpleDate, prettyJobType } from 'utils';
 import Loading from 'components/loading';
 
 class JobView extends Component {
@@ -11,10 +11,10 @@ class JobView extends Component {
         description: PropTypes.string,
         companyName: PropTypes.string,
         companyWebsite: PropTypes.string,
+        companyLogo: PropTypes.string,
         address: PropTypes.string,
         type: PropTypes.string,
         publishedAt: PropTypes.string,
-        logo: PropTypes.string,
         isFetching: PropTypes.bool.isRequired,
         isPreview: PropTypes.bool
     }
@@ -30,8 +30,8 @@ class JobView extends Component {
             return <Loading />;
         }
 
-        const { slug, title, companyName, companyWebsite, address, type, publishedAt, logo } = this.props;
-        const logoURI = logo || '/img/company-logo.png';
+        const {slug, title, companyName, companyWebsite, companyLogo, address, type, publishedAt} = this.props;
+        const logoURI = companyLogo || '/img/company-logo.png';
         const editUrl = `/jobs/${slug}/edit`;
 
         return (
@@ -46,7 +46,7 @@ class JobView extends Component {
                             <h3>{companyName}</h3>
                             <address>{address}</address>
                             <div className="job-meta">
-                                <span>{type}</span>
+                                <span>{prettyJobType(type)}</span>
                                 <time>{simpleDate(publishedAt)}</time>
                             </div>
                         </header>

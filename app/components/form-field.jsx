@@ -10,7 +10,7 @@ class FormField extends Component {
         defaultValue: PropTypes.string,
         instructions: PropTypes.string,
         type: PropTypes.string,
-        options: PropTypes.array,
+        options: PropTypes.object,
         errors: PropTypes.object
     }
 
@@ -35,7 +35,7 @@ class FormField extends Component {
 
         return (
             <select id={fieldId} defaultValue={defaultValue} ref="field">
-                {_.map(options, (opt) => <option key={opt.value} value={opt.value}>{opt.text}</option>)}
+                {_.map(options, (text, value) => <option key={value} value={value}>{text}</option>)}
             </select>
         );
     }

@@ -1,6 +1,7 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 import { Link } from 'react-router';
+import { jobTypesMap } from 'utils';
 import FormField from 'components/form-field';
 
 class JobView extends Component {
@@ -48,24 +49,19 @@ class JobView extends Component {
     }
 
     render() {
-        const {title, description, address, type, url, companyName, companyWebsite, companyEmail, companyTwitter, errors} = this.props;
-        const types = [
-            {value: 'fulltime', text: 'Full Time'},
-            {value: 'contract', text: 'Contract'},
-            {value: 'freelance', text: 'Freelance'}
-        ];
+        const {title, description, address, type, url, companyName, companyWebsite, companyEmail, companyTwitter, errors, isNew} = this.props;
 
         return (
             <div className="page">
                 <header className="page-header">
-                    <h2 className="page-header-title">Create your job listing</h2>
+                    <h2 className="page-header-title">{isNew ? 'Create your job listing' : 'Edit job listing'}</h2>
                 </header>
                 <section className="page-content">
                     <main className="main">
                         <form onSubmit={this.handleSubmit.bind(this)}>
                             <fieldset>
                                 <FormField name="title" label="Job title" defaultValue={title} errors={errors} ref="title" />
-                                <FormField name="type" type="select" options={types} label="Job type" defaultValue={type} errors={errors} ref="type" />
+                                <FormField name="type" type="select" options={jobTypesMap} label="Job type" defaultValue={type} errors={errors} ref="type" />
                                 <FormField name="address" label="Job location" defaultValue={address} errors={errors} ref="address" />
                                 <FormField
                                     name="description"
@@ -96,7 +92,7 @@ class JobView extends Component {
                                     ref="companyTwitter" />
                             </fieldset>
                             <fieldset>
-                                <button type="submit" className="button">Preview job listing</button>
+                                <button type="submit" className="button">{isNew ? 'Preview job listing' : 'Save changes'}</button>
                             </fieldset>
                         </form>
                     </main>

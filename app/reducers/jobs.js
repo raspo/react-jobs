@@ -4,6 +4,7 @@ import {
     RECEIVE_JOBS,
     FILTER_JOBS,
     REQUEST_JOB,
+    NEW_JOB_FORM,
     RECEIVE_JOB,
     RECEIVE_NEW_JOB
 } from 'constants/action-types';
@@ -78,6 +79,11 @@ export function job(state = {
     const { type, payload } = action;
 
     switch (type) {
+        case NEW_JOB_FORM:
+            return {
+                isComplete: false,
+                isFetching: false
+            };
         case REQUEST_JOB:
             return {
                 isComplete: false,
