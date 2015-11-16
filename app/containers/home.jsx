@@ -72,7 +72,7 @@ function filterJobs(jobIds, jobsById, filter) {
             result.push(jobs[score.index]);
         }
         return result;
-    }, []);
+    }, []).reverse();
 }
 
 function homeSelector(state) {
