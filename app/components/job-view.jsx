@@ -1,6 +1,7 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 import { Link } from 'react-router';
+import marked from 'marked';
 import { simpleDate, prettyJobType } from 'utils';
 import Loading from 'components/loading';
 
@@ -21,7 +22,11 @@ class JobView extends Component {
 
     renderContent() {
         return {
-            __html: this.props.description
+            __html: marked(this.props.description || '', {
+                sanitize: false,
+                tables: false,
+                breaks: true
+            })
         };
     }
 

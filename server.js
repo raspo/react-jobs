@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const filter = require('content-filter');
 const compress = require('compression');
 const favicon = require('serve-favicon');
 
@@ -33,6 +34,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride());
+app.use(filter());
 app.use(compress());
 app.use(redirectHTTP);
 

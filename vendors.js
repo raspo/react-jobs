@@ -1,14 +1,15 @@
 module.exports = [
+    'classnames',
+    'history',
+    'isomorphic-fetch',
     'lodash',
+    'marked',
     'react',
     'react-dom',
-    'react-router',
     'react-redux',
+    'react-router',
     'redux',
-    'history',
-    'redux-router',
-    'redux-thunk',
     'redux-logger',
-    'classnames',
-    'isomorphic-fetch'
+    'redux-router',
+    'redux-thunk'
 ];
