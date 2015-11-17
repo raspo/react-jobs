@@ -3,7 +3,8 @@
     "verbose": false,
     "watch": [
         "server.js",
-        "server"
+        "server",
+        "config"
     ],
     "env": {
         "NODE_ENV": "development"

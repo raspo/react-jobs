@@ -14,10 +14,12 @@ const filter = require('content-filter');
 const compress = require('compression');
 const favicon = require('serve-favicon');
 
-try { fs.statSync(path.join(__dirname + '/ssl/server.key')); } catch (e) {
+const config = require('./config');
+
+try { fs.statSync(path.join(__dirname, config.ssl.key)); } catch (e) {
     // Here is a good guide on how to generate ssl certificates for development
     // http://www.akadia.com/services/ssh_test_certificate.html
-    console.log('The server requires a SSL certificate');
+    console.error('The server requires a SSL certificate');
     process.exit(0);
 }
 
@@ -41,7 +43,15 @@ app.use(redirectHTTP);
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(express.static(__dirname + '/public'));
 
-mongoose.connect('mongodb://localhost/reactjobs');
+mongoose.connect(config.db.uri, {
+    user: config.db.username,
+    pass: config.db.password
+}, function(err) {
+    if (err) {
+        console.error('There was an error trying to connect to the DB');
+        process.exit(0);
+    }
+});
 
 app.use('/api', apiRouter);
 
@@ -50,13 +60,13 @@ app.get('*', (req, res) => {
 });
 
 const serverOptions = {
-    key: fs.readFileSync(path.join(__dirname + '/ssl/server.key')),
-    cert: fs.readFileSync(path.join(__dirname + '/ssl/server.crt')),
+    key: fs.readFileSync(path.join(__dirname, config.ssl.key)),
+    cert: fs.readFileSync(path.join(__dirname, config.ssl.cert)),
     requestCert: false,
     rejectUnauthorized: false
 };
 
-http.createServer(app).listen(3001); // 80 for prod
-https.createServer(serverOptions, app).listen(3000, function() { // 443 for prod
-    console.log('Secure server listening on port 3000');
+http.createServer(app).listen(config.http.port);
+https.createServer(serverOptions, app).listen(config.https.port, function() {
+    console.log(`Secure server listening on port ${config.https.port}`);
 });
