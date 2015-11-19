@@ -10,6 +10,7 @@ class FormField extends Component {
         defaultValue: PropTypes.string,
         instructions: PropTypes.string,
         type: PropTypes.string,
+        action: PropTypes.string,
         options: PropTypes.object,
         errors: PropTypes.object
     }
@@ -40,6 +41,25 @@ class FormField extends Component {
         );
     }
 
+    renderRadio() {
+        const {name, defaultValue, options} = this.props;
+        const fieldId = `field-radio-${name}`;
+
+        return (
+            <div className="radio-container" ref="field">
+                {_.map(options, (text, value) => {
+                    const checked = defaultValue === value;
+                    const optionId = `${fieldId}-${value}`;
+                    return (
+                        <label key={value} htmlFor={optionId} className="label-radio">
+                            <input type="radio" value={value} id={optionId} name={fieldId} defaultChecked={checked} /><span>{text}</span>
+                        </label>
+                    );
+                })}
+            </div>
+        );
+    }
+
     renderTextarea() {
         const {name, defaultValue} = this.props;
         const fieldId = `field-${name}`;
@@ -54,6 +74,18 @@ class FormField extends Component {
         return <input type="text" id={fieldId} defaultValue={defaultValue} ref="field" />;
     }
 
+    renderActionInput() {
+        const {name, defaultValue, action} = this.props;
+        const fieldId = `field-${name}`;
+
+        return (
+            <div className="field-with-button">
+                <input type="text" id={fieldId} defaultValue={defaultValue} ref="field" />
+                <button>{action}</button>
+            </div>
+        );
+    }
+
     renderField() {
         const {type} = this.props;
 
@@ -62,6 +94,10 @@ class FormField extends Component {
                 return this.renderSelect();
             case 'textarea':
                 return this.renderTextarea();
+            case 'radio':
+                return this.renderRadio();
+            case 'actioninput':
+                return this.renderActionInput();
             default:
                 return this.renderTextInput();
         }
@@ -72,17 +108,18 @@ class FormField extends Component {
         const fieldId = `field-${name}`;
         const error = _.get(errors, name) || false;
         const classes = classNames({
-            'is-invalid': !!error
+            'is-invalid': !!error,
+            'field': true
         });
 
         return (
-            <label htmlFor={fieldId} className={classes}>
-                <span>{label}</span>
+            <div className={classes}>
+                <label htmlFor={fieldId}>{label}</label>
                 <div>
                     {this.renderField()}
                     {this.renderInstructions()}
                 </div>
-            </label>
+            </div>
         );
     }
 }

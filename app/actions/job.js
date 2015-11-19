@@ -9,6 +9,7 @@ import {
     RECEIVE_NEW_JOB,
     JOB_NOT_FOUND
 } from 'constants/action-types';
+import { checkStatus } from 'utils';
 
 function requestJob(id) {
     return {
@@ -75,16 +76,6 @@ function updatedJob(data) {
     };
 }
 
-function checkStatus(res) {
-    if (res.status >= 200 && res.status < 300) {
-        return res;
-    }
-
-    const error = new Error(res.statusText);
-    error.res = res;
-    throw error;
-}
-
 function fetchJob(id) {
     return dispatch => {
         dispatch(requestJob(id));
@@ -144,6 +135,7 @@ export function createNewJob(data) {
             },
             body: JSON.stringify(data)
         })
+        .then(checkStatus)
         .then(req => req.json())
         .then((json) => {
             if (!json.job.errors) {
@@ -165,6 +157,7 @@ export function updateJob(data) {
             },
             body: JSON.stringify(data)
         })
+        .then(checkStatus)
         .then(req => req.json())
         .then((json) => {
             if (!json.job.errors) {

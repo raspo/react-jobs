@@ -7,24 +7,17 @@ import Create from 'containers/create';
 import Job from 'containers/job';
 import Edit from 'containers/edit';
 import Preview from 'containers/preview';
+import Payment from 'containers/payment';
 import NotFound from 'containers/not-found';
-
-function requireAuth(nextState, replaceState) {
-    console.log('auth is required');
-}
-
-function logout(nextState, replaceState) {
-    console.log('logout');
-}
 
 export default (
     <Route path="/" component={AppLayout}>
         <IndexRoute component={Home} />
         <Route path="jobs/new" component={Create} />
         <Route path="jobs/:slug" component={Job} />
-        <Route path="jobs/:slug/edit" component={Edit} onEnter={requireAuth} />
+        <Route path="jobs/:slug/edit" component={Edit} />
         <Route path="jobs/:slug/preview" component={Preview} />
-        <Route path="logout" onEnter={logout} />
+        <Route path="jobs/:slug/payment" component={Payment} />
         <Route path="*" component={NotFound} />
     </Route>
 );

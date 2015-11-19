@@ -1,6 +1,7 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
+import { replaceState } from 'redux-router';
 import { getJob, updateJob } from 'actions/job';
 import JobEdit from 'components/job-edit';
 import Loading from 'components/loading';
@@ -17,7 +18,19 @@ class Edit extends Component {
         // if non authorized, redirect to /
         const { dispatch, routeParams } = this.props;
         const id = routeParams.slug.replace(/-(.*)/gi, '');
+        this.ensureAuthorization(this.props);
         dispatch(getJob(id));
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.ensureAuthorization(newProps);
+    }
+
+    ensureAuthorization(props) {
+        const { dispatch } = this.props;
+        if (props.publishedAt) {
+            dispatch(replaceState(null, '/'));
+        }
     }
 
     handleSubmit(data) {

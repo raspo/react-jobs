@@ -1,7 +1,7 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
-import { redirect } from 'actions/app';
+import { redirect, hardRedirect } from 'actions/app';
 import Header from 'components/header';
 
 class AppLayout extends Component {
@@ -16,6 +16,9 @@ class AppLayout extends Component {
         const { app } = newProps;
         if (app.redirect) {
             dispatch(redirect(app.redirect));
+        }
+        if (app.hardredirect) {
+            dispatch(hardRedirect(app.hardredirect));
         }
     }
 

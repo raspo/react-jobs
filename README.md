@@ -28,6 +28,7 @@ Here are some of the frameworks/technologies used:
 1. Publish the website
 1. Figure out content for sidebar
 1. Decent looking 404 page
+1. Set page title
 1. Admin interface (requires authentication)
 1. Add the ability to flag a job posting
 1. Contact page

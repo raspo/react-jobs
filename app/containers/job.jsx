@@ -1,7 +1,7 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
-import { pushState } from 'redux-router';
+import { replaceState } from 'redux-router';
 import { getJob } from 'actions/job';
 import JobView from 'components/job-view';
 
@@ -18,9 +18,13 @@ class Job extends Component {
     }
 
     componentWillReceiveProps(newProps) {
+        this.ensureAuthorization(newProps);
+    }
+
+    ensureAuthorization(props) {
         const { dispatch } = this.props;
-        if (!newProps.isFetching && !newProps.publishedAt) {
-            dispatch(pushState(null, '/'));
+        if (!props.isFetching && !props.publishedAt) {
+            dispatch(replaceState(null, '/'));
         }
     }
 

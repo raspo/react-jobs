@@ -57,9 +57,8 @@ class JobView extends Component {
             return <Loading />;
         }
 
-        const {slug, title, companyName, companyWebsite, companyLogo, address, type, publishedAt} = this.props;
+        const { title, companyName, companyWebsite, companyLogo, address, type, publishedAt } = this.props;
         const logoURI = companyLogo || '/img/company-logo.png';
-        const editUrl = `/jobs/${slug}/edit`;
 
         return (
             <div className="page">
@@ -86,8 +85,6 @@ class JobView extends Component {
                             <li><Link to="/">Report this listing</Link></li>
                             <li className="separator"></li>
                             <li><Link to="/">Go back to job board</Link></li>
-                            <li className="separator"></li>
-                            <li><Link to={editUrl}>Edit this listing</Link></li>
                         </ul>
                     </aside>
                 </section>

@@ -1,4 +1,4 @@
-input,
+input[type='text'],
 select,
 textarea {
     background: #FFF;
@@ -86,46 +86,64 @@ form {
         }
     }
 
-    label {
-        clear: both;
-        display: block;
-        padding: 0 0 @vertical-spacing;
-        overflow: hidden;
-
-        span {
-            float: left;
-            line-height: 20px;
-            padding: 7px 0 0;
-            width: @label-width;
-        }
-
-        > div {
-            padding-left: @label-width + @horizontal-spacing;
-        }
-
-        .instructions {
-            color: @muted-color;
-            font-size: 12px;
-            line-height: 1.3em;
-            padding-top: 7px;
-        }
-
-        &.is-invalid {
-            input,
-            textarea,
-            select {
-                border-color: #C12020;
-            }
-        }
-    }
-
     .button {
         float: right;
     }
 }
 
-.input-filter {
+.field {
+    clear: both;
+    display: block;
+    padding: 0 0 @vertical-spacing;
+    overflow: hidden;
+
+    > label {
+        float: left;
+        line-height: 20px;
+        padding: 7px 0 0;
+        width: @label-width;
+    }
+
+    > div {
+        padding-left: @label-width + @horizontal-spacing;
+    }
+
+    .instructions {
+        color: @muted-color;
+        font-size: 12px;
+        line-height: 1.3em;
+        padding-top: 7px;
+    }
+
+    &.is-invalid {
+        input,
+        textarea,
+        select {
+            border-color: #C12020;
+        }
+    }
+
+    &:last-child {
+        padding-bottom: 0;
+    }
+}
+
+.label-radio {
+    display: block;
+    line-height: 20px;
+    margin-top: 7px;
+
+    input {
+        margin: 0 8px 0 0;
+    }
+}
+
+input.input-filter {
     height: 40px;
+}
+
+#field-cvc {
+    width: 80px;
 }
 
 .field-with-button {
