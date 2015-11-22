@@ -1,15 +1,15 @@
 const webpack = require('webpack');
-const VENDORS = require('./vendors.js');
+const pkg = require('./package.json');
 
 module.exports = {
     context: __dirname,
     entry: {
         app: ['./app/app.jsx'],
-        vendors: VENDORS
+        vendors: Object.keys(pkg.dependencies)
     },
     output: {
-        path: __dirname + '/public/js',
-        publicPath: '/js/',
+        // path: __dirname + '/dist/js',
+        // publicPath: '/js/',
         filename: 'app.js'
     },
     module: {

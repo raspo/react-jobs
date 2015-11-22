@@ -1,3 +1,4 @@
+const fs = require('fs');
 const gulp = require('gulp');
 const path = require('path');
 const del = require('del');
@@ -8,6 +9,8 @@ const runSequence = require('run-sequence');
 const plumber = require('gulp-plumber');
 const webpack = require('gulp-webpack');
 const less = require('gulp-less');
+const imagemin = require('gulp-imagemin');
+const imageminOptipng = require('imagemin-optipng');
 const sourcemaps = require('gulp-sourcemaps');
 const LessPluginCleanCSS = require('less-plugin-clean-css');
 const LessPluginAutoPrefix = require('less-plugin-autoprefix');
@@ -15,8 +18,23 @@ const LessPluginAutoPrefix = require('less-plugin-autoprefix');
 const cleancss = new LessPluginCleanCSS({ advanced: true });
 const autoprefix = new LessPluginAutoPrefix({ browsers: ['last 2 versions'] });
 
+const PATHS = {
+    JS: './dist/js',
+    CSS: './dist/css',
+    IMG: './dist/img'
+};
+
+try {
+    const paths = JSON.parse(fs.readFileSync(path.join(__dirname, 'gulpfile.paths.json')));
+    PATHS.JS = paths.js;
+    PATHS.CSS = paths.css;
+    PATHS.IMG = paths.img;
+} catch (e) {
+    console.log('No "gulpfile.paths.json" found, using default paths');
+}
+
 function isDev() {
-    return false;
+    return process.env.NODE_ENV !== 'production';
 }
 
 function logChange(event) {
@@ -40,7 +58,7 @@ gulp.task('webpack:dev', () => {
 
     return gulp.src('./app.jsx')
         .pipe(webpack(webpackConfigDev, null, logWebpackBuild))
-        .pipe(gulp.dest('./public/js'));
+        .pipe(gulp.dest(PATHS.JS));
 });
 
 gulp.task('webpack:prod', () => {
@@ -48,7 +66,7 @@ gulp.task('webpack:prod', () => {
 
     return gulp.src('./app.jsx')
         .pipe(webpack(webpackConfigProd, null, logWebpackBuild))
-        .pipe(gulp.dest('./public/js'));
+        .pipe(gulp.dest(PATHS.JS));
 });
 
 gulp.task('less', () => {
@@ -61,11 +79,25 @@ gulp.task('less', () => {
         }))
         .pipe(plumber.stop())
         .pipe(gulpif(isDev, sourcemaps.write()))
-        .pipe(gulp.dest('./public/css'));
+        .pipe(gulp.dest(PATHS.CSS));
+});
+
+gulp.task('images', () => {
+    return gulp.src('./img/*')
+        .pipe(imagemin({
+            progressive: true,
+            svgoPlugins: [{removeViewBox: false}],
+            use: [
+                imageminOptipng({optimizationLevel: 3})
+            ]
+        }))
+        .pipe(gulp.dest(PATHS.IMG));
 });
 
 gulp.task('clean', () => {
-    return del(['public/js/*', 'public/css/*']);
+    return del([`${PATHS.JS}/*`, `${PATHS.CSS}/*`, `${PATHS.IMG}/*`], {
+        force: true
+    });
 });
 
 gulp.task('watch', (done) => {
@@ -80,6 +112,13 @@ gulp.task('watch', (done) => {
         events.on('data', logChange).on('end', complete);
     }));
 
+    gulp.watch('./img/*', batch((events, complete) => {
+        events.on('data', logChange).on('end', () => {
+            gulp.start('images');
+            complete();
+        });
+    }));
+
     done();
 });
 
@@ -87,6 +126,7 @@ gulp.task('build', (done) => {
     runSequence(
         'clean',
         'less',
+        'images',
         'webpack:prod',
         done
     );
@@ -95,6 +135,7 @@ gulp.task('build', (done) => {
 gulp.task('default', (done) => {
     runSequence(
         'less',
+        'images',
         'watch',
         'webpack:dev',
         done

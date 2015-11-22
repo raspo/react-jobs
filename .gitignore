@@ -1,6 +1,7 @@
 .DS_Store
 *.log
+gulpfile.paths.json
 node_modules
-public/js
-public/css
-ssl/
+dist/js
+dist/css
+dist/img
