@@ -11,6 +11,7 @@ const webpack = require('gulp-webpack');
 const less = require('gulp-less');
 const imagemin = require('gulp-imagemin');
 const imageminOptipng = require('imagemin-optipng');
+const svgSprite = require('gulp-svg-sprite');
 const sourcemaps = require('gulp-sourcemaps');
 const LessPluginCleanCSS = require('less-plugin-clean-css');
 const LessPluginAutoPrefix = require('less-plugin-autoprefix');
@@ -21,7 +22,8 @@ const autoprefix = new LessPluginAutoPrefix({ browsers: ['last 2 versions'] });
 const PATHS = {
     JS: './dist/js',
     CSS: './dist/css',
-    IMG: './dist/img'
+    IMG: './dist/img',
+    SVG: './dist/svg'
 };
 
 try {
@@ -29,6 +31,7 @@ try {
     PATHS.JS = paths.js;
     PATHS.CSS = paths.css;
     PATHS.IMG = paths.img;
+    PATHS.SVG = paths.svg;
 } catch (e) {
     console.log('No "gulpfile.paths.json" found, using default paths');
 }
@@ -86,7 +89,6 @@ gulp.task('images', () => {
     return gulp.src('./img/*')
         .pipe(imagemin({
             progressive: true,
-            svgoPlugins: [{removeViewBox: false}],
             use: [
                 imageminOptipng({optimizationLevel: 3})
             ]
@@ -94,8 +96,24 @@ gulp.task('images', () => {
         .pipe(gulp.dest(PATHS.IMG));
 });
 
+gulp.task('svg', () => {
+    return gulp.src('./svg/*.svg')
+        .pipe(svgSprite({
+            mode: {
+                symbol: {
+                    bust: false,
+                    dest: '',
+                    sprite: 'icons.svg',
+                    render: false,
+                    inline: true
+                }
+            }
+        }))
+        .pipe(gulp.dest(PATHS.SVG));
+});
+
 gulp.task('clean', () => {
-    return del([`${PATHS.JS}/*`, `${PATHS.CSS}/*`, `${PATHS.IMG}/*`], {
+    return del([`${PATHS.JS}/*`, `${PATHS.CSS}/*`, `${PATHS.IMG}/*`, `${PATHS.SVG}/*`], {
         force: true
     });
 });
@@ -119,6 +137,13 @@ gulp.task('watch', (done) => {
         });
     }));
 
+    gulp.watch('./svg/*', batch((events, complete) => {
+        events.on('data', logChange).on('end', () => {
+            gulp.start('svg');
+            complete();
+        });
+    }));
+
     done();
 });
 
@@ -126,6 +151,7 @@ gulp.task('build', (done) => {
     runSequence(
         'clean',
         'less',
+        'svg',
         'images',
         'webpack:prod',
         done
@@ -135,6 +161,7 @@ gulp.task('build', (done) => {
 gulp.task('default', (done) => {
     runSequence(
         'less',
+        'svg',
         'images',
         'watch',
         'webpack:dev',
