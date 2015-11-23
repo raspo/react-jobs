@@ -3,6 +3,7 @@ import React from 'react';
 const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import DocumentTitle from 'react-document-title';
 import { stringScore } from 'utils';
 import { getJobs, setFilter } from 'actions/jobs';
 import Filter from 'components/filter';
@@ -30,24 +31,27 @@ class Home extends Component {
         const { filter, isFetching, filteredJobs } = this.props;
         const isFiltered = !!filter;
         return (
-            <div className="page">
-                <header className="page-header ">
-                    <main className="main">
-                        <Filter value={filter} onChange={this.handleChange.bind(this)} />
-                    </main>
-                    <aside className="sidebar">
-                        <Link className="button button-fluid" to="/jobs/new">Post a job</Link>
-                    </aside>
-                </header>
-                <section className="page-content">
-                    <main className="main">
-                        {isFetching ? <Loading /> : <JobList jobs={filteredJobs} isFiltered={isFiltered} />}
-                    </main>
-                    <aside className="sidebar">
-
-                    </aside>
-                </section>
-            </div>
+            <DocumentTitle title="React Jobs">
+                <div className="page">
+                    <header className="page-header ">
+                        <main className="main">
+                            <Filter value={filter} onChange={this.handleChange.bind(this)} />
+                        </main>
+                        <aside className="sidebar">
+                            <Link className="button button-fluid" to="/jobs/new">Post a job</Link>
+                        </aside>
+                    </header>
+                    <section className="page-content">
+                        <main className="main">
+                            {isFetching ? <Loading /> : <JobList jobs={filteredJobs} isFiltered={isFiltered} />}
+                        </main>
+                        <aside className="sidebar">
+                            <p>ReactJobs is the best place to post your React, Flux, Redux or Javascript ninja jobs.</p>
+                            <p>Post your job today to find your perfect candidate.</p>
+                        </aside>
+                    </section>
+                </div>
+            </DocumentTitle>
         );
     }
 }

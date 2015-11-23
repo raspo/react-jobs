@@ -1,6 +1,7 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
+import DocumentTitle from 'react-document-title';
 import { prepareNewJob, createNewJob } from 'actions/job';
 import JobEdit from 'components/job-edit';
 
@@ -27,7 +28,11 @@ class Create extends Component {
             onSubmit: this.handleSubmit.bind(this)
         };
 
-        return <JobEdit {...props} />;
+        return (
+            <DocumentTitle title="React Jobs - Create new">
+                <JobEdit {...props} />
+            </DocumentTitle>
+        );
     }
 }
 

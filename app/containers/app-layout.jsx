@@ -3,6 +3,7 @@ const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
 import { redirect, hardRedirect } from 'actions/app';
 import Header from 'components/header';
+import Footer from 'components/footer';
 
 class AppLayout extends Component {
     static propTypes = {
@@ -29,6 +30,7 @@ class AppLayout extends Component {
                 <div className="container">
                     {this.props.children}
                 </div>
+                <Footer />
             </div>
         );
     }

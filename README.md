@@ -20,10 +20,12 @@ Here are some of the frameworks/technologies used:
 
 # TODO
 
-1. Add payment page
-1. Add svg icons
+1. Split backend and frontend code
 1. Disable `/preview` for published job postings
 1. Disable `/edit` for published job postings (remove edit link)
+
+1. Add payment page
+1. Add svg icons
 1. Add redirect when visiting the `/apply` page
 1. Publish the website
 1. Figure out content for sidebar

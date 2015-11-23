@@ -1,8 +1,10 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 import { Link } from 'react-router';
+import DocumentTitle from 'react-document-title';
 import marked from 'marked';
 import { simpleDate, prettyJobType } from 'utils';
+import Icon from 'components/icon';
 import Loading from 'components/loading';
 
 class JobView extends Component {
@@ -57,38 +59,59 @@ class JobView extends Component {
             return <Loading />;
         }
 
-        const { title, companyName, companyWebsite, companyLogo, address, type, publishedAt } = this.props;
+        const {
+            title,
+            companyName,
+            companyWebsite,
+            companyLogo,
+            address,
+            type,
+            publishedAt,
+            isPreview
+        } = this.props;
         const logoURI = companyLogo || '/img/company-logo.png';
 
         return (
-            <div className="page">
-                <header className="page-header">
-                    <h2 className="page-header-title">{title}</h2>
-                </header>
-                <section className="page-content">
-                    <main className="main job">
-                        <header className="job-details">
-                            <img src={logoURI} alt={companyName} />
-                            <h3>{companyName}</h3>
-                            <address>{address}</address>
-                            <div className="job-meta">
-                                <span>{prettyJobType(type)}</span>
-                                <time>{simpleDate(publishedAt)}</time>
-                            </div>
-                        </header>
-                        <article dangerouslySetInnerHTML={this.renderContent()}></article>
-                        {this.renderActions()}
-                    </main>
-                    <aside className="sidebar">
-                        <ul className="links">
-                            <li><a href={companyWebsite}>Visit company website</a></li>
-                            <li><Link to="/">Report this listing</Link></li>
-                            <li className="separator"></li>
-                            <li><Link to="/">Go back to job board</Link></li>
-                        </ul>
-                    </aside>
-                </section>
-            </div>
+            <DocumentTitle title={'React Jobs - ' + (isPreview ? 'Preview - ' : '') + title}>
+                <div className="page">
+                    <header className="page-header">
+                        <h2 className="page-header-title">{title}</h2>
+                    </header>
+                    <section className="page-content">
+                        <main className="main content">
+                            <header className="job-details">
+                                <img src={logoURI} alt={companyName} />
+                                <h3>{companyName}</h3>
+                                <address>{address}</address>
+                                <div className="job-meta">
+                                    <span>{prettyJobType(type)}</span>
+                                    <time>{simpleDate(publishedAt)}</time>
+                                </div>
+                            </header>
+                            <article dangerouslySetInnerHTML={this.renderContent()}></article>
+                            {this.renderActions()}
+                        </main>
+                        <aside className="sidebar">
+                            <ul className="links">
+                                <li>
+                                    <a href={companyWebsite} target="_blank">
+                                        <Icon name="earth" /> Visit company website
+                                    </a>
+                                </li>
+                                <li>
+                                    <Link to="/">
+                                        <Icon name="flag" /> Report this listing
+                                    </Link>
+                                </li>
+                                <li className="separator"></li>
+                                <li>
+                                    <Link to="/">Go back to job board</Link>
+                                </li>
+                            </ul>
+                        </aside>
+                    </section>
+                </div>
+            </DocumentTitle>
         );
     }
 }

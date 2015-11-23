@@ -2,6 +2,7 @@ import React from 'react';
 const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
 import { replaceState } from 'redux-router';
+import DocumentTitle from 'react-document-title';
 import { getJob } from 'actions/job';
 import { processPayment } from 'actions/payment';
 import PaymentForm from 'components/payment-form';
@@ -49,7 +50,11 @@ class Payment extends Component {
             onSubmit: this.handleSubmit.bind(this)
         };
 
-        return <PaymentForm {...props} />;
+        return (
+            <DocumentTitle title="React Jobs - Payment">
+                <PaymentForm {...props} />
+            </DocumentTitle>
+        );
     }
 }
 
