@@ -2,6 +2,7 @@ import React from 'react';
 const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
 import { replaceState } from 'redux-router';
+import DocumentTitle from 'react-document-title';
 import { getJob, updateJob } from 'actions/job';
 import JobEdit from 'components/job-edit';
 import Loading from 'components/loading';
@@ -48,7 +49,11 @@ class Edit extends Component {
             onSubmit: this.handleSubmit.bind(this)
         };
 
-        return <JobEdit {...props} />;
+        return (
+            <DocumentTitle title="React Jobs - Edit">
+                <JobEdit {...props} />
+            </DocumentTitle>
+        );
     }
 }
 
