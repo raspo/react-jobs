@@ -1,5 +1,6 @@
 import React from 'react';
 const { Component, PropTypes } = React;
+import Icon from 'components/icon';
 
 class Filter extends Component {
     static propTypes = {
@@ -14,11 +15,14 @@ class Filter extends Component {
 
     render() {
         return (
-            <input type="text"
-                className="input-filter"
-                onKeyUp={this.handleKeyUp.bind(this)}
-                defaultValue={this.props.value}
-                placeholder="Filter jobs, companies, location..." />
+            <div className="filter">
+                <input type="text"
+                    className="input-filter"
+                    onKeyUp={this.handleKeyUp.bind(this)}
+                    defaultValue={this.props.value}
+                    placeholder="Filter jobs, companies, location..." />
+                <Icon name="search" />
+            </div>
         );
     }
 }

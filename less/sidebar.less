@@ -1,0 +1,33 @@
+.links {
+    list-style: none;
+
+    li {
+        font-size: 12px;
+        margin: 0 0 10px;
+    }
+
+    .icon {
+        fill: @text-color;
+        height: 11px;
+        margin-right: 3px;
+        width: 11px;
+    }
+
+    a {
+        color: @text-color;
+
+        &:hover {
+            color: @cta-color;
+
+            .icon {
+                fill: @cta-color;
+            }
+        }
+    }
+
+    .separator {
+        background: @border-color;
+        height: 1px;
+        margin: 10px 0;
+    }
+}

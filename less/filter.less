@@ -1,0 +1,21 @@
+.filter {
+    position: relative;
+}
+
+.icon-search {
+    fill: @muted-color;
+    height: 16px;
+    pointer-events: none;
+    position: absolute;
+    right: 13px;
+    top: 13px;
+    width: 16px;
+}
+
+input.input-filter {
+    height: 40px;
+
+    &:focus + .icon-search {
+        fill: @text-color;
+    }
+}

@@ -3,6 +3,7 @@ const { Component, PropTypes } = React;
 import { Link } from 'react-router';
 import marked from 'marked';
 import { simpleDate, prettyJobType } from 'utils';
+import Icon from 'components/icon';
 import Loading from 'components/loading';
 
 class JobView extends Component {
@@ -81,10 +82,20 @@ class JobView extends Component {
                     </main>
                     <aside className="sidebar">
                         <ul className="links">
-                            <li><a href={companyWebsite}>Visit company website</a></li>
-                            <li><Link to="/">Report this listing</Link></li>
+                            <li>
+                                <a href={companyWebsite} target="_blank">
+                                    <Icon name="earth" /> Visit company website
+                                </a>
+                            </li>
+                            <li>
+                                <Link to="/">
+                                    <Icon name="flag" /> Report this listing
+                                </Link>
+                            </li>
                             <li className="separator"></li>
-                            <li><Link to="/">Go back to job board</Link></li>
+                            <li>
+                                <Link to="/">Go back to job board</Link>
+                            </li>
                         </ul>
                     </aside>
                 </section>
