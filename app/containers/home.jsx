@@ -46,7 +46,8 @@ class Home extends Component {
                             {isFetching ? <Loading /> : <JobList jobs={filteredJobs} isFiltered={isFiltered} />}
                         </main>
                         <aside className="sidebar">
-
+                            <p>ReactJobs is the best place to post your React, Flux, Redux or Javascript ninja jobs.</p>
+                            <p>Post your job today to find your perfect candidate.</p>
                         </aside>
                     </section>
                 </div>

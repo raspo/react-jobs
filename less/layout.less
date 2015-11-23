@@ -44,7 +44,7 @@
 .page {
     background: @page-background;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.16);
-    margin: -@page-header-height 0 (@vertical-spacing * 3);
+    margin: -@page-header-height 0 0;
 }
 
 .page-header {
@@ -64,6 +64,10 @@
     font-weight: normal;
     line-height: 40px;
     padding: @vertical-spacing @horizontal-spacing;
+
+    .main & {
+        padding: 0;
+    }
 }
 
 .page-content {
@@ -82,4 +86,13 @@
     border-top: 1px solid @border-color;
     margin: (@vertical-spacing * 2) -@horizontal-spacing -@vertical-spacing;
     padding: @vertical-spacing @horizontal-spacing;
+}
+
+.contact-message {
+    border-bottom: 1px solid @border-color;
+    padding: @vertical-spacing @horizontal-spacing;
+
+    p {
+        line-height: 1.4em;
+    }
 }

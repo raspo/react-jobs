@@ -78,7 +78,7 @@ class JobView extends Component {
                         <h2 className="page-header-title">{title}</h2>
                     </header>
                     <section className="page-content">
-                        <main className="main job">
+                        <main className="main content">
                             <header className="job-details">
                                 <img src={logoURI} alt={companyName} />
                                 <h3>{companyName}</h3>

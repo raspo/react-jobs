@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 const { Component, PropTypes } = React;
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import DocumentTitle from 'react-document-title';
 import { getJobs } from 'actions/jobs';
 import JobList from 'components/job-list';
@@ -25,11 +26,16 @@ class NotFound extends Component {
             <DocumentTitle title="React Jobs - Page not found">
                 <div className="page">
                     <header className="page-header">
-                        <h2 className="page-header-title">404 - Page not found</h2>
+                        <main className="main">
+                            <h2 className="page-header-title">404 - Page not found</h2>
+                        </main>
+                        <aside className="sidebar">
+                            <Link className="button button-fluid" to="/jobs/new">Post a job</Link>
+                        </aside>
                     </header>
                     <section className="page-content">
                         <main className="main">
-                            {isFetching ? <Loading /> : <JobList jobs={jobsList} />}
+                            {isFetching ? <Loading /> : <JobList jobs={jobsList} isFiltered={false} />}
                         </main>
                         <aside className="sidebar">
 
