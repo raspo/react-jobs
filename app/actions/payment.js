@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import fetch from 'isomorphic-fetch';
 import {
     PROCESS_PAYMENT,

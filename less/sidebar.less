@@ -34,9 +34,17 @@
 
 .sidebar {
     p {
-        color: @muted-color;
         font-size: 13px;
         line-height: 1.4em;
         margin-bottom: 1em;
+
+        a {
+            color: @text-color;
+            text-decoration: underline;
+
+            &:hover {
+                color: @cta-color;
+            }
+        }
     }
 }

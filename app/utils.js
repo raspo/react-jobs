@@ -1,4 +1,4 @@
-const months = [
+const monthsCompact = [
     'JAN',
     'FEB',
     'MAR',
@@ -13,16 +13,46 @@ const months = [
     'DEC'
 ];
 
+export const months = [
+    { num: '01', name: 'January' },
+    { num: '02', name: 'February' },
+    { num: '03', name: 'March' },
+    { num: '04', name: 'April' },
+    { num: '05', name: 'May' },
+    { num: '06', name: 'June' },
+    { num: '07', name: 'July' },
+    { num: '08', name: 'August' },
+    { num: '09', name: 'September' },
+    { num: '10', name: 'October' },
+    { num: '11', name: 'November' },
+    { num: '12', name: 'December' }
+];
+
 export const jobTypesMap = {
     fulltime: 'Full Time',
     contract: 'Contract',
     freelance: 'Freelance'
 };
 
+export const pricingMap = {
+    base: {
+        cost: 99,
+        duration: 30
+    },
+    extended: {
+        cost: 149,
+        duration: 60
+    },
+    premium: {
+        cost: 199,
+        duration: 90
+    }
+};
+
 export function simpleDate(datestring) {
     const date = new Date(datestring);
     if (!date || !date.getTime()) { return '--'; }
-    return months[date.getUTCMonth()] + ' ' + date.getUTCDate();
+    return monthsCompact[date.getUTCMonth()] + ' ' + date.getUTCDate();
 }
 
 export function prettyJobType(jobType) {
@@ -78,4 +108,16 @@ export function checkStatus(res) {
     const error = new Error(res.statusText);
     error.res = res;
     throw error;
+}
+
+export function getCardYears() {
+    const years = [];
+    let year = new Date().getFullYear();
+    let i = 15;
+    while (i > 0) {
+        years.push(year);
+        year += 1;
+        i -= 1;
+    }
+    return years;
 }

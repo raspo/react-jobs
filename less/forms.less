@@ -94,6 +94,19 @@ form {
     .button {
         float: right;
     }
+
+    p {
+        line-height: 1.4em;
+
+        a {
+            color: @cta-color;
+
+            &:hover {
+                color: @cta-color;
+                text-decoration: underline;
+            }
+        }
+    }
 }
 
 .field {
@@ -143,10 +156,6 @@ form {
     }
 }
 
-#field-cvc {
-    width: 80px;
-}
-
 .field-with-button {
     background: #fff;
     border: 1px solid @border-color;
@@ -180,7 +189,27 @@ form {
     }
 }
 
-.company-logo {
-    height: @company-logo-normal;
-    width: @company-logo-normal;
+.field-card-expiration {
+    #exp_month {
+        margin-right: 10%;
+        width: 50%;
+    }
+    #exp_year {
+        width: 40%;
+    }
+}
+
+#field-cvc {
+    width: 80px;
+}
+
+.terms {
+    border-top: 1px solid @border-color;
+    font-size: 14px;
+    margin-top: @vertical-spacing/2;
+    padding-top: @vertical-spacing/2;
+}
+
+.button-payment {
+    width: 220px;
 }

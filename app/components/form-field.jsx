@@ -41,25 +41,6 @@ class FormField extends Component {
         );
     }
 
-    renderRadio() {
-        const {name, defaultValue, options} = this.props;
-        const fieldId = `field-radio-${name}`;
-
-        return (
-            <div className="radio-container" ref="field">
-                {_.map(options, (text, value) => {
-                    const checked = defaultValue === value;
-                    const optionId = `${fieldId}-${value}`;
-                    return (
-                        <label key={value} htmlFor={optionId} className="label-radio">
-                            <input type="radio" value={value} id={optionId} name={fieldId} defaultChecked={checked} /><span>{text}</span>
-                        </label>
-                    );
-                })}
-            </div>
-        );
-    }
-
     renderTextarea() {
         const {name, defaultValue} = this.props;
         const fieldId = `field-${name}`;
@@ -94,8 +75,6 @@ class FormField extends Component {
                 return this.renderSelect();
             case 'textarea':
                 return this.renderTextarea();
-            case 'radio':
-                return this.renderRadio();
             case 'actioninput':
                 return this.renderActionInput();
             default:
