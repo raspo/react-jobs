@@ -6,21 +6,20 @@ import DocumentTitle from 'react-document-title';
 import { getJob } from 'actions/job';
 import { processPayment } from 'actions/payment';
 import PaymentForm from 'components/payment-form';
+import scriptLoader from 'components/script-loader';
 import Loading from 'components/loading';
 
 class Payment extends Component {
     static propTypes = {
+        scriptsReady: PropTypes.bool,
         isFetching: PropTypes.bool.isRequired,
         routeParams: PropTypes.object.isRequired,
         dispatch: PropTypes.func.isRequired
     }
 
     componentDidMount() {
-        // TODO check if you have job already
-        // if non authorized, redirect to /
         const { dispatch, routeParams } = this.props;
         const id = routeParams.slug.replace(/-(.*)/gi, '');
-        this.ensureAuthorization(this.props);
         dispatch(getJob(id));
     }
 
@@ -41,7 +40,8 @@ class Payment extends Component {
     }
 
     render() {
-        if (this.props.isFetching) {
+        const { isFetching, scriptsReady } = this.props;
+        if (isFetching || !scriptsReady) {
             return <Loading />;
         }
 
@@ -63,4 +63,4 @@ function jobSelector(state) {
     return { ...job };
 }
 
-export default connect(jobSelector)(Payment);
+export default scriptLoader(connect(jobSelector)(Payment), ['https://js.stripe.com/v2/']);

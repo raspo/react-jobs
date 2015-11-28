@@ -8,8 +8,6 @@ module.exports = {
         vendors: Object.keys(pkg.dependencies)
     },
     output: {
-        // path: __dirname + '/dist/js',
-        // publicPath: '/js/',
         filename: 'app.js'
     },
     module: {

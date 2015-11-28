@@ -1,8 +1,8 @@
 import fetch from 'isomorphic-fetch';
 import {
-        REQUEST_JOBS,
-        RECEIVE_JOBS,
-        FILTER_JOBS
+    REQUEST_JOBS,
+    RECEIVE_JOBS,
+    FILTER_JOBS
 } from 'constants/action-types';
 
 function requestJobs() {

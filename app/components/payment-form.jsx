@@ -3,7 +3,7 @@ const { Component, PropTypes } = React;
 import { Link } from 'react-router';
 import FormField from 'components/form-field';
 
-class JobView extends Component {
+export default class PaymentForm extends Component {
     static propTypes = {
         id: PropTypes.string,
         title: PropTypes.string,
@@ -35,7 +35,7 @@ class JobView extends Component {
     }
 
     render() {
-        const {errors} = this.props;
+        const { errors } = this.props;
         const amounts = {
             'base': '30 days at $99',
             'extended': '60 days at $149',
@@ -74,5 +74,3 @@ class JobView extends Component {
         );
     }
 }
-
-export default JobView;

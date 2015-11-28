@@ -74,7 +74,7 @@ export function jobsById(state = {}, action) {
     }
 }
 
-export function job(state = {isFetching: false}, action) {
+export function job(state = { isFetching: true }, action) {
     const { type, payload } = action;
 
     switch (type) {
