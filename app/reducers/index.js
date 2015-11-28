@@ -14,6 +14,10 @@ import {
     job
 } from 'reducers/jobs.js';
 
+import {
+    payment
+} from 'reducers/payment.js';
+
 const rootReducer = combineReducers({
     app,
     filter,
@@ -22,6 +26,7 @@ const rootReducer = combineReducers({
     jobs,
     jobsById,
     job,
+    payment,
     router
 });
 

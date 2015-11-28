@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { replaceState } from 'redux-router';
 import DocumentTitle from 'react-document-title';
 import { getJob } from 'actions/job';
-import { processPayment } from 'actions/payment';
+import { submitPayment } from 'actions/payment';
 import PaymentForm from 'components/payment-form';
 import scriptLoader from 'components/script-loader';
 import Loading from 'components/loading';
@@ -20,6 +20,7 @@ class Payment extends Component {
     componentDidMount() {
         const { dispatch, routeParams } = this.props;
         const id = routeParams.slug.replace(/-(.*)/gi, '');
+        this.ensureAuthorization(this.props);
         dispatch(getJob(id));
     }
 
@@ -36,7 +37,7 @@ class Payment extends Component {
 
     handleSubmit(data) {
         const { dispatch } = this.props;
-        dispatch(processPayment(data));
+        dispatch(submitPayment(data));
     }
 
     render() {
@@ -59,8 +60,18 @@ class Payment extends Component {
 }
 
 function jobSelector(state) {
-    const { job } = state;
-    return { ...job };
+    const { job, payment } = state;
+
+    return {
+        jobId: job.id,
+        errors: {
+            ...job.errors,
+            ...payment.errors
+        },
+        publishedAt: job.publishedAt,
+        isFetching: job.isFetching,
+        isProcessing: payment.isProcessing
+    };
 }
 
 export default scriptLoader(connect(jobSelector)(Payment), ['https://js.stripe.com/v2/']);

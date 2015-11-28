@@ -1,21 +1,22 @@
+import _ from 'lodash';
 import fetch from 'isomorphic-fetch';
 import {
-    PAYMENT_PROGRESSING,
-    PAYMENT_COMPLETE,
-    PAYMENT_FAILURE,
+    PROCESS_PAYMENT,
+    COMPLETE_PAYMENT,
+    INVALID_PAYMENT,
     UNAUTHORIZED
 } from 'constants/action-types';
 import { checkStatus } from 'utils';
 
 function processing() {
     return {
-        type: PAYMENT_PROGRESSING
+        type: PROCESS_PAYMENT
     };
 }
 
 function failed(data) {
     return {
-        type: PAYMENT_FAILURE,
+        type: INVALID_PAYMENT,
         payload: {
             ...data
         }
@@ -33,21 +34,21 @@ function unauthorized() {
 
 function complete(data) {
     return {
-        type: PAYMENT_COMPLETE,
+        type: COMPLETE_PAYMENT,
         payload: {
             ...data
         }
     };
 }
 
-export function processPayment(data) {
+function processPayment(data) {
     return (dispatch) => {
-        dispatch(processing());
         return fetch(`/api/jobs/${data.id}/payment`, {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache, must-revalidate'
             },
             body: JSON.stringify(data)
         })
@@ -55,14 +56,41 @@ export function processPayment(data) {
         .then(req => req.json())
         .then((json) => {
             if (!json.job.errors) {
-                dispatch(failed(json.payment));
+                dispatch(failed(json.job));
             }
-            dispatch(complete(json.payment));
+            dispatch(complete(json.job));
         })
         .catch((error) => {
             if (error.res.status >= 400) {
                 dispatch(unauthorized());
             }
+        });
+    };
+}
+
+function tokenHandler(status, response, postingData) {
+    return (dispatch) => {
+        if (response.error) {
+            const validationError = {};
+            validationError[response.error.param] = { ...response.error };
+
+            dispatch(failed(validationError));
+        } else {
+            dispatch(processPayment({
+                ...postingData,
+                stripeToken: response.id
+            }));
+        }
+    };
+}
+
+export function submitPayment(data) {
+    return (dispatch) => {
+        const { card, posting } = data;
+        dispatch(processing());
+        window.Stripe.setPublishableKey('pk_test_W6Vsbolbp9nlLX7on999beph');
+        window.Stripe.card.createToken(card, (status, response) => {
+            dispatch(tokenHandler(status, response, posting));
         });
     };
 }
