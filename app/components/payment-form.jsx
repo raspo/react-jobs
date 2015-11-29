@@ -1,14 +1,13 @@
 import _ from 'lodash';
 import React from 'react';
 const { Component, PropTypes } = React;
-import classNames from 'classnames';
 import { Link } from 'react-router';
 import { pricingMap, months, getCardYears } from 'utils';
 import FormField from 'components/form-field';
 
 export default class PaymentForm extends Component {
     static propTypes = {
-        jobId: PropTypes.string.isRequired,
+        id: PropTypes.string.isRequired,
         isProcessing: PropTypes.bool.isRequired,
         errors: PropTypes.object,
         onSubmit: PropTypes.func.isRequired
@@ -33,7 +32,7 @@ export default class PaymentForm extends Component {
     getPostingData() {
         return {
             amount: this.state.amount,
-            id: this.props.jobId
+            id: this.props.id
         };
     }
 

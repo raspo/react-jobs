@@ -48,9 +48,21 @@ class JobView extends Component {
         }
 
         return (
-            <footer className="job-apply">
+            <footer className="cta-container">
                 <Link className="button" to={applicationUrl}>Apply now</Link>
             </footer>
+        );
+    }
+
+    renderCompanyWebsiteUrl(url) {
+        if (!url) { return null; }
+
+        return (
+            <li>
+                <a href={url} target="_blank">
+                    <Icon name="earth" /> Visit company website
+                </a>
+            </li>
         );
     }
 
@@ -72,7 +84,7 @@ class JobView extends Component {
         const logoURI = companyLogo || '/img/company-logo.png';
 
         return (
-            <DocumentTitle title={'React Jobs - ' + (isPreview ? 'Preview - ' : '') + title}>
+            <DocumentTitle title={'React.js Jobs - ' + (isPreview ? 'Preview - ' : '') + title}>
                 <div className="page">
                     <header className="page-header">
                         <h2 className="page-header-title">{title}</h2>
@@ -93,11 +105,7 @@ class JobView extends Component {
                         </main>
                         <aside className="sidebar">
                             <ul className="links">
-                                <li>
-                                    <a href={companyWebsite} target="_blank">
-                                        <Icon name="earth" /> Visit company website
-                                    </a>
-                                </li>
+                                {this.renderCompanyWebsiteUrl(companyWebsite)}
                                 <li>
                                     <Link to="/">
                                         <Icon name="flag" /> Report this listing

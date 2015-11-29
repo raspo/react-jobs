@@ -88,11 +88,24 @@
     padding: @vertical-spacing @horizontal-spacing;
 }
 
-.contact-message {
+.content-header {
+    background: #fff;
     border-bottom: 1px solid @border-color;
     padding: @vertical-spacing @horizontal-spacing;
 
     p {
         line-height: 1.4em;
+    }
+}
+
+.cta-container {
+    background: @page-background;
+    border-top: 1px solid @border-color;
+    margin: (@vertical-spacing * 2) -@horizontal-spacing -@vertical-spacing;
+    padding: (@vertical-spacing * 2) @horizontal-spacing;
+    text-align: center;
+
+    .button {
+        min-width: 190px;
     }
 }

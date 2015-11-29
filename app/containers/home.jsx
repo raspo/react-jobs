@@ -9,6 +9,7 @@ import { getJobs, setFilter } from 'actions/jobs';
 import Filter from 'components/filter';
 import JobList from 'components/job-list';
 import Loading from 'components/loading';
+import Icon from 'components/icon';
 
 class Home extends Component {
     static propTypes = {
@@ -31,7 +32,7 @@ class Home extends Component {
         const { filter, isFetching, filteredJobs } = this.props;
         const isFiltered = !!filter;
         return (
-            <DocumentTitle title="React Jobs">
+            <DocumentTitle title="React.js Jobs">
                 <div className="page">
                     <header className="page-header ">
                         <main className="main">
@@ -46,8 +47,17 @@ class Home extends Component {
                             {isFetching ? <Loading /> : <JobList jobs={filteredJobs} isFiltered={isFiltered} />}
                         </main>
                         <aside className="sidebar">
-                            <p>ReactJobs is the best place to post your React, Flux, Redux or Javascript ninja jobs.</p>
+                            <p>React.js Jobs is the best place to post your React, Flux, Redux or Javascript ninja jobs.</p>
                             <p>Post your job today to find your perfect candidate.</p>
+
+                            <ul className="links">
+                                <li className="separator"></li>
+                                <li>
+                                    <a href="https://twitter.com/reactjs_jobs" target="_blank">
+                                        <Icon name="twitter" /> Follow @reactjs_jobs
+                                    </a>
+                                </li>
+                            </ul>
                         </aside>
                     </section>
                 </div>

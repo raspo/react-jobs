@@ -11,7 +11,7 @@ export default class Header extends Component {
                     <h1 className="logo">
                         <Link to="/">
                             <Icon name="react-logo" />
-                            <span>React Jobs</span>
+                            <span>React.js Jobs</span>
                         </Link>
                     </h1>
                 </div>

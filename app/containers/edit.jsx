@@ -50,7 +50,7 @@ class Edit extends Component {
         };
 
         return (
-            <DocumentTitle title="React Jobs - Edit">
+            <DocumentTitle title="React.js Jobs - Edit">
                 <JobEdit {...props} />
             </DocumentTitle>
         );

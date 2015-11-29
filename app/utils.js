@@ -59,6 +59,18 @@ export function prettyJobType(jobType) {
     return jobTypesMap[jobType];
 }
 
+export function getCardYears() {
+    const years = [];
+    let year = new Date().getFullYear();
+    let i = 15;
+    while (i > 0) {
+        years.push(year);
+        year += 1;
+        i -= 1;
+    }
+    return years;
+}
+
 export function stringScore(string, target) {
     if (string === target) { return 1; }
     if (target === '') { return 0; }
@@ -110,14 +122,6 @@ export function checkStatus(res) {
     throw error;
 }
 
-export function getCardYears() {
-    const years = [];
-    let year = new Date().getFullYear();
-    let i = 15;
-    while (i > 0) {
-        years.push(year);
-        year += 1;
-        i -= 1;
-    }
-    return years;
+export function absoluteURL(resource) {
+    return `${window.location.protocol}//${window.location.host}${resource}`;
 }

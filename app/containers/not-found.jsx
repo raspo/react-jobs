@@ -23,7 +23,7 @@ class NotFound extends Component {
     render() {
         const { isFetching, jobsList } = this.props;
         return (
-            <DocumentTitle title="React Jobs - Page not found">
+            <DocumentTitle title="React.js Jobs - Page not found">
                 <div className="page">
                     <header className="page-header">
                         <main className="main">

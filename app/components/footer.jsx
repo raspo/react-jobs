@@ -7,7 +7,7 @@ export default class Header extends Component {
         return (
             <footer className="footer">
                 <div className="container">
-                    &copy; 2015 react-jobs.com - <Link to="/guarantee">Our Guarantee</Link> - <Link to="/contact">Contact Us</Link>
+                    &copy; 2015 reactjs-jobs.com - <Link to="/guarantee">Our Guarantee</Link> - <Link to="/contact">Contact Us</Link>
                 </div>
             </footer>
         );

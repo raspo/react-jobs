@@ -29,7 +29,7 @@ class Create extends Component {
         };
 
         return (
-            <DocumentTitle title="React Jobs - Create new">
+            <DocumentTitle title="React.js Jobs - Create new">
                 <JobEdit {...props} />
             </DocumentTitle>
         );

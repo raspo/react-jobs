@@ -6,7 +6,7 @@ import DocumentTitle from 'react-document-title';
 export default class Guarantee extends Component {
     render() {
         return (
-            <DocumentTitle title="React Jobs - Our guarantee">
+            <DocumentTitle title="React.js Jobs - Our guarantee">
                 <div className="page">
                     <header className="page-header">
                         <main className="main">

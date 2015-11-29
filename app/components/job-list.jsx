@@ -10,7 +10,7 @@ class JobList extends Component {
     }
 
     renderJob(job) {
-        const { id, slug, title, companyName, companyLogo, address, createdAt } = job;
+        const { id, slug, title, companyName, companyLogo, address, publishedAt } = job;
         const jobUrl = `/jobs/${slug}`;
         const logoURI = companyLogo || '/img/company-logo.png';
 
@@ -21,7 +21,7 @@ class JobList extends Component {
                     <h2 className="job-list-item-title">{title}</h2>
                     <h3 className="job-list-item-company">{companyName}</h3>
                     <div className="job-list-item-meta">
-                        <time>{simpleDate(createdAt)}</time>
+                        <time>{simpleDate(publishedAt)}</time>
                         <address>{address}</address>
                     </div>
                 </Link>

@@ -57,7 +57,7 @@ function receiveNewJob(data) {
     };
 }
 
-function receiveJob(data) {
+export function receiveJob(data) {
     return {
         type: RECEIVE_JOB,
         payload: {
