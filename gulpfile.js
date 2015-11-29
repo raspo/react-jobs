@@ -73,12 +73,14 @@ gulp.task('webpack:prod', () => {
 });
 
 gulp.task('less', () => {
+    const lessPlugings = isDev() ? [autoprefix] : [autoprefix, cleancss];
+
     return gulp.src('./less/app.less')
         .pipe(plumber())
         .pipe(gulpif(isDev, sourcemaps.init()))
         .pipe(less({
             paths: [path.join(__dirname, 'less')],
-            plugins: [autoprefix, cleancss]
+            plugins: lessPlugings
         }))
         .pipe(plumber.stop())
         .pipe(gulpif(isDev, sourcemaps.write()))

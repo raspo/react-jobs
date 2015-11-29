@@ -82,7 +82,7 @@ export default class PaymentForm extends Component {
     renderExpirationFields() {
         return (
             <div className="field">
-                <label htmlFor="amount">Expiration date</label>
+                <label htmlFor="exp_month">Expiration date</label>
                 <div className="field-card-expiration">
                     <select id="exp_month" ref="exp_month">
                         {_.map(months, m => <option key={m.num} value={m.num}>{m.num} - {m.name}</option>)}
@@ -91,6 +91,20 @@ export default class PaymentForm extends Component {
                         {_.map(getCardYears(), year => <option key={year} value={year}>{year}</option>)}
                     </select>
                 </div>
+            </div>
+        );
+    }
+
+    renderErrors() {
+        const { errors } = this.props;
+
+        if (_.isEmpty(errors)) { return null; }
+
+        return (
+            <div className="alert">
+                <p>
+                    <strong>Sorry, we couldn't process your payment.</strong> <br/> <small>Your credit card number or expiration date may have been incorrect. Please try again.</small>
+                </p>
             </div>
         );
     }
@@ -114,6 +128,7 @@ export default class PaymentForm extends Component {
                 <section className="page-content">
                     <main className="main">
                         <form onSubmit={this.handleSubmit.bind(this)}>
+                            {this.renderErrors()}
                             <fieldset>
                                 {this.renderAmountSelector()}
                             </fieldset>
